@@ -1,0 +1,156 @@
+{% load static %}
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chidiyaa — Following</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐦</text></svg>" />
+    <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'myapp/css/followers_following.css' %}" />
+</head>
+
+<body>
+    <div class="app-shell">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <a href="{% url 'index' %}" class="sidebar-brand">
+                <div class="sidebar-brand-icon">🐦</div><span class="sidebar-brand-name">Chidiyaa</span>
+            </a>
+            <nav class="sidebar-nav">
+                <a href="{% url 'index' %}" class="nav-link"><i class="ph ph-house nav-icon"></i><span>Home</span></a>
+                <a href="{% url 'search' %}" class="nav-link"><i
+                        class="ph ph-magnifying-glass nav-icon"></i><span>Search</span></a>
+                <a href="{% url 'search' %}" class="nav-link"><i
+                        class="ph ph-compass nav-icon"></i><span>Explore</span></a>
+                <a href="{% url 'reels' %}" class="nav-link"><i
+                        class="ph ph-video-camera nav-icon"></i><span>Reels</span></a>
+                <a href="{% url 'messages' %}" class="nav-link"><i
+                        class="ph ph-chat-circle nav-icon"></i><span>Messages</span><span class="nav-badge">3</span></a>
+                <a href="{% url 'notifications' %}" class="nav-link"><i
+                        class="ph ph-bell nav-icon"></i><span>Notifications</span><span class="nav-badge">9</span></a>
+                <a href="{% url 'create' %}" class="nav-link"><i
+                        class="ph ph-plus-circle nav-icon"></i><span>Create</span></a>
+                <a href="{% url 'profile' %}" class="nav-link active"><i
+                        class="ph ph-user nav-icon"></i><span>Profile</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="sidebar-divider"></div>
+                <div class="dark-toggle-row"><i class="ph ph-moon nav-icon"></i><span>Dark Mode</span><span
+                        class="toggle-pill"></span></div>
+                <a href="{% url 'login' %}" class="nav-link" style="color:var(--text-3)"><span
+                        class="nav-icon">🚪</span><span>Logout</span></a>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <main class="page-content">
+
+            <!-- Mobile Topbar -->
+            <header class="mobile-topbar">
+                <span class="mobile-brand">Following</span>
+                <div class="mobile-topbar-actions">
+                    <button class="theme-toggle-btn"><i class="ph ph-moon"></i></button>
+                </div>
+            </header>
+           
+                <div class="follow-page">
+
+                <!-- Accent bar -->
+                <div class="follow-accent-bar"></div>
+
+                <!-- Header -->
+                <div class="follow-page-header">
+                    <a href="{% url 'profile' %}" class="follow-back-btn">←</a>
+                    <div class="follow-page-title-wrap">
+                        <div class="follow-page-username">{{ uid.username }}</div>
+                        <h1 class="follow-page-title">Following</h1>
+                    </div>
+                    <div class="follow-search-wrap">
+                        <input type="text" id="followSearch" placeholder="Search following..." />
+                    </div>
+                </div>
+                 
+
+                <!-- Tabs (links, no JS) -->
+                <div class="follow-tabs">
+                    <a href="{% url 'followers' %}" class="follow-tab">
+                        Followers <span class="tab-count">8,247</span>
+                    </a>
+                    <a href="{% url 'following' %}" class="follow-tab active">
+                        Following <span class="tab-count">614</span>
+                    </a>
+                </div>
+
+                <!-- Section label -->
+                <div class="follow-section-label">People you follow</div>
+
+                <!-- ══════════════════════════════
+           FOLLOWING LIST
+      ══════════════════════════════ -->
+                <div class="follow-list">
+
+                    <!-- 1 · priya.s — follows you back -->
+                    {% for user in users %}
+                    {% if user.id in my_following %}
+                    <div class="follow-item">
+                        <div class="follow-ava-wrap has-story">
+                            <div class="follow-ava">
+                                <img src="{{user.profile_pic.url}}" alt="{{user.username}}" />
+                            </div>
+                            <div class="follow-online-dot"></div>
+                        </div>
+
+                        <div class="follow-info">
+                            <div class="follow-name-row">
+                                <span class="follow-username">{{user.username}}</span>
+                                <span class="follow-verified">✅</span>
+                            </div>
+                            <div class="follow-fullname">{{user.name}}</div>
+                        </div>
+
+                        <div class="follow-actions">
+                            <a href="{% url 'follow_unfollow' pk=user.id %}" class="btn-follow-off">
+                                Un-Follow
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+
+                </div><!-- /follow-list -->
+                
+            </div><!-- /follow-page -->
+        </main>
+
+    </div><!-- /app-shell -->
+
+    <!-- Mobile Bottom Nav -->
+    <nav class="mobile-bottomnav" style="display:flex">
+        <a href="{% url 'index' %}" class="mobile-nav-item">🏠</a>
+        <a href="{% url 'search' %}" class="mobile-nav-item">🔍</a>
+        <a href="{% url 'create' %}" class="mobile-nav-item">➕</a>
+        <a href="{% url 'reels' %}" class="mobile-nav-item">🎬</a>
+        <a href="{% url 'profile' %}" class="mobile-nav-item active">
+            <img src="{{ uid.profile_pic.url }}" style="width:26px;height:26px;border-radius:50%;object-fit:cover;"
+                alt="" />
+        </a>
+    </nav>
+
+    <!-- Dark mode only JS (matches all other Chidiyaa pages) -->
+    <script src="{% static 'myapp/js/script.js' %}"></script>
+    <script>
+        const html = document.documentElement;
+        document.querySelector('.dark-toggle-row').addEventListener('click', () => {
+            const dark = html.dataset.theme !== 'dark';
+            html.setAttribute('data-theme', dark ? 'dark' : 'light');
+            localStorage.setItem('chidiyaaTheme', dark ? 'dark' : 'light');
+        });
+        if (localStorage.getItem('chidiyaaTheme') === 'dark') html.setAttribute('data-theme', 'dark');
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+{% load static %}
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chidiyaa — Log in</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐦</text></svg>" />
+  <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}" />
+</head>
+
+<body>
+  <div class="auth-outer">
+
+    <!-- Left — Phone Mockup -->
+    <div class="auth-left">
+      <div class="auth-left-bg"></div>
+      <div class="auth-phone-mockup">
+        <div class="auth-phone-frame">
+          <div class="auth-phone-screen">
+            <span>🐦</span>
+            <span class="brand-text">Chidiyaa</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right — Forms -->
+    <div class="auth-right">
+      <div class="auth-form-wrap">
+
+        <div class="auth-card">
+          <div class="auth-brand">
+            <div class="auth-brand-logo">Chidiyaa</div>
+          </div>
+          <p class="auth-tagline">Connect. Share. Soar. 🐦</p>
+
+          <button class="social-login-btn" type="button" onclick="window.location.href='index.html'">
+            <span style="font-size:20px">📘</span> Continue with Facebook
+          </button>
+          <button class="social-login-btn" type="button" onclick="window.location.href='index.html'">
+            <span style="font-size:20px">🔵</span> Continue with Google
+          </button>
+
+          <div class="auth-divider"><span>or</span></div>
+
+          <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <div class="field-group">
+              <label class="field-label" for="email">Email</label>
+              <input class="field-input" id="email" type="text" placeholder="your@email.com" required
+                autocomplete="username" name="email" />
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="password">Password</label>
+              <input class="field-input" id="password" type="password" placeholder="••••••••" required
+                autocomplete="current-password" name="password" />
+            </div>
+
+            <input class="btn-auth" type="submit" value="Login">
+
+          </form>
+
+          <a href="{% url 'forgot_password' %}" class="auth-forgot">Forgot password?</a>
+        </div>
+
+        <div class="auth-footer-card">
+          Don't have an account?
+          <a href="{% url 'register' %}" class="auth-link">Sign up</a>
+        </div>
+
+        <!-- App badges -->
+        <div style="text-align:center;margin-top:24px;">
+          <p style="font-size:12.5px;color:var(--text-3);margin-bottom:12px">Get the Chidiyaa app.</p>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+            <a href="#"
+              style="display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:12.5px;font-weight:600;color:var(--text-1);transition:background .15s;"
+              onmouseover="this.style.background='var(--surface-2)'" onmouseout="this.style.background=''">📱 App
+              Store</a>
+            <a href="#"
+              style="display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:12.5px;font-weight:600;color:var(--text-1);transition:background .15s;"
+              onmouseover="this.style.background='var(--surface-2)'" onmouseout="this.style.background=''">🤖 Google
+              Play</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Dark mode fab -->
+  <button class="theme-toggle-btn" title="Toggle dark mode"
+    style="position:fixed;bottom:24px;right:24px;width:46px;height:46px;border-radius:50%;background:var(--surface);border:1.5px solid var(--border);font-size:20px;cursor:pointer;box-shadow:var(--shadow-md);transition:all .2s;">🌙</button>
+
+  <script src="{% static 'myapp/js/script.js' %}"></script>
+</body>
+
+</html>

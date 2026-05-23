@@ -1,0 +1,152 @@
+{% load static %}
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chidiyaa — Create Post</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐦</text></svg>" />
+  <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'myapp/css/create.css' %}" />
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a href="{% url 'index' %}" class="sidebar-brand">
+        <div class="sidebar-brand-icon">🐦</div><span class="sidebar-brand-name">Chidiyaa</span>
+      </a>
+      <nav class="sidebar-nav">
+        <a href="{% url 'index' %}" class="nav-link"><i class="ph ph-house nav-icon"></i><span>Home</span></a>
+        <a href="{% url 'search' %}" class="nav-link"><i class="ph ph-magnifying-glass nav-icon"></i><span>Search</span></a>
+        <a href="{% url 'search' %}" class="nav-link"><i class="ph ph-compass nav-icon"></i><span>Explore</span></a>
+        <a href="{% url 'reels' %}" class="nav-link"><i class="ph ph-video-camera nav-icon"></i><span>Reels</span></a>
+        <a href="{% url 'messages' %}" class="nav-link"><i class="ph ph-chat-circle nav-icon"></i><span>Messages</span><span class="nav-badge">3</span></a>
+        <a href="{% url 'notifications' %}" class="nav-link"><i class="ph ph-bell nav-icon"></i><span>Notifications</span><span class="nav-badge">9</span></a>
+        <a href="{% url 'create' %}" class="nav-link active"><i class="ph ph-plus-circle nav-icon"></i><span>Create</span></a>
+        <a href="{% url 'profile' %}" class="nav-link"><i class="ph ph-user nav-icon"></i><span>Profile</span></a>
+        <div class="sidebar-footer">
+          <div class="sidebar-divider"></div>
+          <div class="dark-toggle-row"><i class="ph ph-moon nav-icon"></i><span>Dark Mode</span><span class="toggle-pill"></span></div>
+          <a href="login.html" class="nav-link" style="color:var(--text-3)"><span class="nav-icon">🚪</span><span>Logout</span></a>
+        </div>
+    </aside>
+
+    <main class="page-content" style="background:var(--nude-50,#faf8f5);min-height:100vh;">
+
+      <!-- ── Mobile topbar ── -->
+      <header class="mobile-topbar">
+        <span class="mobile-brand">New Post</span>
+        <div class="mobile-topbar-actions">
+          <a href="{% url 'upload_reels' %}" class="btn-reel-mobile">🎬 Reel</a>
+          <button class="theme-toggle-btn"><i class="ph ph-moon"></i></button>
+          <a href="{% url 'index' %}"><button style="color:var(--accent);font-weight:700;font-size:14px;">✕</button></a>
+        </div>
+      </header>
+
+      <!-- ── Desktop top action bar ── -->
+      <div class="create-topbar">
+        <div class="create-topbar-left">
+          <span style="font-size:22px;">🐦</span>
+          <div>
+            <div class="create-topbar-title">New Post</div>
+            <div class="create-topbar-sub">Share a photo or video with your flock</div>
+          </div>
+        </div>
+        <div class="create-topbar-actions">
+          <a href="{% url 'upload_reels' %}" class="btn-reel">🎬 Upload Reel</a>
+          <button type="submit" form="create-post-form" class="btn-share-top">Share 🐦</button>
+        </div>
+      </div>
+
+      <!-- ── Form ── -->
+      <form id="create-post-form" action="{% url 'create' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="create-wrap">
+          <div class="create-panel">
+
+            <!-- LEFT: Upload -->
+            <div class="panel-left">
+              <label class="upload-zone">
+                <input type="file" name="post_image" accept="image/*">
+                <div class="upload-icon">🖼️</div>
+                <p class="upload-title">Drag photos & videos here</p>
+                <p class="upload-sub">PNG · JPG · MP4 · HEVC</p>
+                <span class="upload-cta">Select from computer</span>
+              </label>
+            </div>
+
+            <!-- RIGHT: Details -->
+            <div class="panel-right">
+
+              <!-- Author -->
+              <div class="author-row">
+                <div class="author-ava"><img src="{{uid.profile_pic.url}}" alt="{{uid.username}}" /></div>
+                <span class="author-name">{{uid.username}}</span>
+              </div>
+
+              <div class="divider-line"></div>
+
+              <!-- Caption -->
+              <div class="field-wrap caption-wrap">
+                <label class="field-label">Caption</label>
+                <textarea
+                  class="field-input caption-input"
+                  name="caption"
+                  maxlength="2200"
+                  placeholder="Write a caption… Use #hashtags and @mentions"
+                  id="caption-input"
+                ></textarea>
+                <span class="char-count" id="char-count">0 / 2,200</span>
+              </div>
+
+              <!-- Location + Tag -->
+              <div class="fields-grid">
+                <div class="field-wrap">
+                  <label class="field-label">Location</label>
+                  <input type="text" class="field-input" name="location" placeholder="📍 Add location" maxlength="200" />
+                </div>
+                <div class="field-wrap">
+                  <label class="field-label">Tag People</label>
+                  <input type="text" class="field-input" name="tagged_users" placeholder="👥 Tag people" maxlength="200" />
+                </div>
+              </div>
+
+              <!-- Mobile share button -->
+              <button type="submit" class="btn-share-top" style="display:none;margin-top:auto;" id="mobile-share-btn">Share 🐦</button>
+
+            </div>
+          </div>
+        </div>
+      </form>
+
+    </main>
+  </div>
+
+  <nav class="mobile-bottomnav">
+    <a href="{% url 'index' %}" class="mobile-nav-item">🏠</a>
+    <a href="{% url 'search' %}" class="mobile-nav-item">🔍</a>
+    <a href="{% url 'create' %}" class="mobile-nav-item active">➕</a>
+    <a href="{% url 'reels' %}" class="mobile-nav-item">🎬</a>
+    <a href="{% url 'profile' %}" class="mobile-nav-item">
+      <img src="{{uid.profile_pic.url}}" onerror="this.src='https://i.pravatar.cc/40?img=3'"
+        style="width:26px;height:26px;border-radius:50%;object-fit:cover;" alt="" />
+    </a>
+  </nav>
+
+  <script src="{% static 'myapp/js/script.js' %}"></script>
+  <script>
+    // Char counter
+    const cap = document.getElementById('caption-input');
+    const cnt = document.getElementById('char-count');
+    if (cap && cnt) {
+      cap.addEventListener('input', () => {
+        cnt.textContent = cap.value.length.toLocaleString() + ' / 2,200';
+      });
+    }
+    // Show mobile share btn on small screens
+    const mobileShare = document.getElementById('mobile-share-btn');
+    if (mobileShare && window.innerWidth <= 680) mobileShare.style.display = 'block';
+  </script>
+</body>
+</html>

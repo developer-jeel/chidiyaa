@@ -1,0 +1,193 @@
+{% load static %}
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chidiyaa — meera_j</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐦</text></svg>" />
+  <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}" />
+</head>
+
+<body>
+  <div class="app-shell">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <a href="{% url 'index' %}" class="sidebar-brand">
+        <div class="sidebar-brand-icon">🐦</div><span class="sidebar-brand-name">Chidiyaa</span>
+      </a>
+      <nav class="sidebar-nav">
+        <a href="{% url 'index' %}" class="nav-link"><i class="ph ph-house nav-icon"></i><span>Home</span></a>
+        <a href="{% url 'search' %}" class="nav-link"><i
+            class="ph ph-magnifying-glass nav-icon"></i><span>Search</span></a>
+        <a href="{% url 'search' %}" class="nav-link"><i class="ph ph-compass nav-icon"></i><span>Explore</span></a>
+        <a href="{% url 'reels' %}" class="nav-link"><i class="ph ph-video-camera nav-icon"></i><span>Reels</span></a>
+        <a href="{% url 'messages' %}" class="nav-link "><i
+            class="ph ph-chat-circle nav-icon"></i><span>Messages</span><span class="nav-badge">3</span></a>
+        <a href="{% url 'notifications' %}" class="nav-link"><i
+            class="ph ph-bell nav-icon"></i><span>Notifications</span><span class="nav-badge">9</span></a>
+        <a href="{% url 'create' %}" class="nav-link"><i class="ph ph-plus-circle nav-icon"></i><span>Create</span></a>
+        <a href="{% url 'profile' %}" class="nav-link active"><i class="ph ph-user nav-icon"></i><span>Profile</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-divider"></div>
+        <div class="dark-toggle-row"><i class="ph ph-moon nav-icon"></i><span>Dark Mode</span><span
+            class="toggle-pill"></span></div>
+        <a href="login.html" class="nav-link" style="color:var(--text-3)"><span
+            class="nav-icon">🚪</span><span>Logout</span></a>
+      </div>
+    </aside>
+    <main class="page-content">
+      <form method='post' action="" enctype="multipart/form-data">
+        <header class="mobile-topbar">
+          <span class="mobile-brand">{{uid.name}}</span>
+          <div class="mobile-topbar-actions">
+            <button class="theme-toggle-btn"><i class="ph ph-moon"></i></button>
+            <button>⚙️</button>
+          </div>
+        </header>
+        <div class="profile-outer">
+          <div class="profile-hero">
+            <div class="profile-photo-zone">
+              <div class="profile-photo">
+                <img src="{{uid.profile_pic.url}}" alt="{{uid.username}}">
+                <div class="profile-photo-edit">✏️</div>
+              </div>
+            </div>
+            <div class="profile-details">
+              <div class="profile-top-row">
+                <span class="profile-uname">{{uid.username}}</span>
+                <a href="{% url 'edit_profile' %}" class="profile-btn">Edit Profile</a>
+                <button class="profile-btn">View Archive</button>
+                <button style="font-size:22px;cursor:pointer;color:var(--text-2)">⚙️</button>
+              </div>
+              <div class="profile-stats-row">
+                <div class="profile-stat">
+                  <strong>{{posts.count}}</strong>
+                  <span>posts</span>
+                </div>
+
+
+                <a href="{% url 'followers' %}" class="profile-stat">
+                  <strong>{{followers_count}}</strong>
+                  <span>followers</span>
+                </a>
+
+                <a href="{% url 'following' %}" class="profile-stat">
+                  <strong>{{following_count}}</strong>
+                  <span>following</span>
+                </a>
+              </div>
+
+
+
+
+              <div class="profile-full-name">{{uid.name}}</div>
+              <div class="profile-bio-text">{{uid.bio}}</div>
+              <div class="profile-bio-text">{{uid.description}}</div>
+              <a href="#" class="profile-website">🔗 linktr.ee/meera_j</a>
+            </div>
+          </div>
+          <!-- Tabs -->
+          <div class="profile-tabs">
+            <div class="profile-tab active" data-tab="posts">⊞ Posts</div>
+            <div class="profile-tab" data-tab="reels">🎬 Reels</div>
+            <div class="profile-tab" data-tab="saved">🔖 Saved</div>
+            <div class="profile-tab" data-tab="tagged">🏷️ Tagged</div>
+          </div>
+
+          <!-- Posts grid -->
+          <div id="tab-posts" class="posts-grid profile-tab-content">
+
+            {% for p in posts %}
+            <div class="grid-post"><img src="{{p.image.url}}" alt="" loading="lazy" />
+              <div class="grid-post-overlay"><span>❤️ 3.2K</span><span>💬 112</span></div>
+            </div>
+            <div id="tab-reels" class="posts-grid profile-tab-content" style="display:none">
+              <div class="grid-post"><img src="{{p.image.url}}" alt="" loading="lazy" />
+                <div class="grid-post-overlay"><span>▶️ 48K</span></div>
+              </div>
+            </div>
+            <div id="tab-saved" class="posts-grid profile-tab-content" style="display:none">
+              <div class="grid-post"><img src="{{p.image.url}}" alt="" loading="lazy" />
+                <div class="grid-post-overlay"><span>❤️ 5.2K</span></div>
+              </div>
+              <div id="tab-tagged" class="posts-grid profile-tab-content" style="display:none">
+                <div class="grid-post"><img src="{{p.image.url}}" alt="" loading="lazy" />
+                  <div class="grid-post-overlay"><span>❤️ 1.4K</span></div>
+                </div>
+              </div>
+
+            </div><!-- /profile-outer -->
+            {% endfor %}
+          </div>
+
+    </main>
+
+
+  </div>
+
+  <!-- Post view modal -->
+  <div class="modal-backdrop" id="post-view-modal">
+    <div class="modal-card post-view-card">
+      <div class="post-view-body">
+        <div class="post-view-img"><img src="" alt="Post" /></div>
+        <div class="post-view-right">
+          <div class="modal-header">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:32px;height:32px;border-radius:50%;overflow:hidden;"><img src="{{uid.profile_pic.url}}"
+                  style="width:100%;height:100%;object-fit:cover;" alt="" /></div>
+              <strong>{{uid.username}}</strong>
+            </div>
+            <span class="modal-close" data-close-modal="post-view-modal">✕</span>
+          </div>
+          <div class="post-view-comments-list">
+            <div class="comment-item">
+              <div class="comment-item-ava"><img src="https://i.pravatar.cc/150?img=1" alt="" /></div>
+              <div>
+                <div class="comment-item-body"><strong>aarav_k</strong> Gorgeous shot! 🔥</div>
+                <div class="comment-item-time">3h · <span class="comment-item-reply">Reply</span></div>
+              </div>
+            </div>
+            <div class="comment-item">
+              <div class="comment-item-ava"><img src="https://i.pravatar.cc/150?img=5" alt="" /></div>
+              <div>
+                <div class="comment-item-body"><strong>priya.s</strong> Love this so much ✨</div>
+                <div class="comment-item-time">2h · <span class="comment-item-reply">Reply</span></div>
+              </div>
+            </div>
+          </div>
+          <div style="border-top:1px solid var(--border);">
+            <div class="post-actions" style="padding:10px 12px 6px">
+              <div class="left"><button class="action-btn like-btn">🤍</button><button
+                  class="action-btn">💬</button><button class="action-btn">📤</button></div>
+              <button class="action-btn save-btn">🏷️</button>
+            </div>
+            <div class="post-add-comment">
+              <div class="comment-avatar-sm"><img src="https://i.pravatar.cc/150?img=3" alt="" /></div><input
+                class="comment-input-field" type="text" placeholder="Add a comment…" /><button
+                class="comment-post-btn">Post</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </form>
+
+
+  <nav class="mobile-bottomnav">
+    <a href="index.html" class="mobile-nav-item">🏠</a>
+    <a href="search.html" class="mobile-nav-item">🔍</a>
+    <a href="create.html" class="mobile-nav-item">➕</a>
+    <a href="reels.html" class="mobile-nav-item">🎬</a>
+    <a href="profile.html" class="mobile-nav-item active"><img src="https://i.pravatar.cc/40?img=3"
+        style="width:26px;height:26px;border-radius:50%;object-fit:cover;" alt="" /></a>
+  </nav>
+
+  <script src="{% static 'myapp/js/script.js' %}"></script>
+</body>
+
+</html>

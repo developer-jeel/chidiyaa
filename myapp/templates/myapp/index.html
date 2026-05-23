@@ -1,0 +1,388 @@
+{% load static %}
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chidiyaa — Home</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐦</text></svg>" />
+  <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}" />
+</head>
+
+<body>
+  <div class="app-shell">
+
+    <!-- ══════════════════════════════════════
+       SIDEBAR
+  ══════════════════════════════════════ -->
+    <aside class="sidebar">
+
+      
+      <a href="{% url 'index' %}" class="sidebar-brand">
+        <div class="sidebar-brand-icon">🐦</div>
+        <span class="sidebar-brand-name">Chidiyaa</span>
+      </a>
+      <nav class="sidebar-nav">
+        <a href="{% url 'index' %}" class="nav-link active">
+          <i class="ph ph-house nav-icon"></i>
+          <span>Home</span>
+        </a>
+        <a href="{% url 'search' %}" class="nav-link">
+          <i class="ph ph-magnifying-glass nav-icon"></i>
+          <span>Search</span>
+        </a>
+        <a href="{% url 'search' %}" class="nav-link">
+          <i class="ph ph-compass nav-icon"></i>
+          <span>Explore</span>
+        </a>
+        <a href="{% url 'reels' %}" class="nav-link">
+          <i class="ph ph-video-camera nav-icon"></i>
+          <span>Reels</span>
+        </a>
+        <a href="{% url 'messages' %}" class="nav-link">
+          <i class="ph ph-chat-circle nav-icon"></i>
+          <span>Messages</span>
+          <span class="nav-badge">3</span>
+        </a>
+        <a href="{% url 'notifications' %}" class="nav-link">
+          <i class="ph ph-bell nav-icon"></i>
+          <span>Notifications</span>
+          <span class="nav-badge">9</span>
+        </a>
+        <a href="{% url 'create' %}" class="nav-link">
+          <i class="ph ph-plus-circle nav-icon"></i>
+          <span>Create</span>
+        </a>
+        <a href="{% url 'profile' %}" class="nav-link">
+          <i class="ph ph-user nav-icon"></i>
+          <span>Profile</span>
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-divider"></div>
+        <div class="dark-toggle-row">
+          <i class="ph ph-moon nav-icon"></i>
+          <span>Dark Mode</span>
+          <span class="toggle-pill"></span>
+        </div>
+        <a href="login.html" class="nav-link" style="color:var(--text-3)">
+          <i class="ph ph-sign-out nav-icon"></i>
+          <span>Logout</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- ══════════════════════════════════════
+       PAGE CONTENT
+  ══════════════════════════════════════ -->
+
+    <main class="page-content">
+
+        <!-- Mobile topbar -->
+        <header class="mobile-topbar">
+          <span class="mobile-brand">Chidiyaa <i class="ph ph-bird"></i></span>
+          <div class="mobile-topbar-actions">
+            <button class="theme-toggle-btn"><i class="ph ph-moon"></i></button>
+            <a href="create.html"><button><i class="ph ph-plus"></i></button></a>
+            <a href="messages.html"><button style="position:relative"><i class="ph ph-chat-circle"></i><span
+                  style="position:absolute;top:0;right:0;width:8px;height:8px;background:var(--accent);border-radius:50%;"></span></button></a>
+          </div>
+        </header>
+
+        <!-- Feed Layout -->
+        <div class="feed-layout">
+
+          <!-- ── CENTER FEED ── -->
+          <div class="feed-center">
+
+            <!-- Stories -->
+            <div class="stories-bar">
+              <div class="stories-scroll">
+                <!-- Add story -->
+                <div class="story-item" data-open-modal="create-post-modal">
+                  <div class="story-add">+</div>
+                  <span class="story-name">Your story</span>
+                </div>
+                <!-- Stories (6) -->
+                <div class="story-item" data-story-idx="0">
+                  <div class="story-ring">
+                    <div class="story-ring-inner"><img src="https://i.pravatar.cc/150?img=1" alt="aarav_k" /></div>
+                  </div>
+                  <span class="story-name">aarav_k</span>
+                </div>
+                <div class="story-item" data-story-idx="1">
+                  <div class="story-ring">
+                    <div class="story-ring-inner"><img src="https://i.pravatar.cc/150?img=5" alt="priya.s" /></div>
+                  </div>
+                  <span class="story-name">priya.s</span>
+                </div>
+                <div class="story-item" data-story-idx="2">
+                  <div class="story-ring">
+                    <div class="story-ring-inner"><img src="https://i.pravatar.cc/150?img=8" alt="rohit_m" /></div>
+                  </div>
+                  <span class="story-name">rohit_m</span>
+                </div>
+                <div class="story-item" data-story-idx="3">
+                  <div class="story-ring seen">
+                    <div class="story-ring-inner"><img src="https://i.pravatar.cc/150?img=9" alt="sneha.d" /></div>
+                  </div>
+                  <span class="story-name">sneha.d</span>
+                </div>
+                <div class="story-item" data-story-idx="4">
+                  <div class="story-ring seen">
+                    <div class="story-ring-inner"><img src="https://i.pravatar.cc/150?img=12" alt="dev.p" /></div>
+                  </div>
+                  <span class="story-name">dev.p</span>
+                </div>
+                <div class="story-item" data-story-idx="5">
+                  <div class="story-ring">
+                    <div class="story-ring-inner"><img src="https://i.pravatar.cc/150?img=15" alt="kavya.r" /></div>
+                  </div>
+                  <span class="story-name">kavya.r</span>
+                </div>
+                <div class="story-item" data-story-idx="0">
+                  <div class="story-ring">
+                    <div class="story-ring-inner"><img src="https://i.pravatar.cc/150?img=20" alt="nikhil.v" /></div>
+                  </div>
+                  <span class="story-name">nikhil.v</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── POST 1 ── -->
+            {% for post in post_all %}
+            <article class="post-card">
+              <div class="post-header">
+                <a href="profile.html" class="post-avatar"><img src="{{post.user.profile_pic.url}}"
+                    alt="{{post.user.username}}" /></a>
+                <div class="post-meta">
+                  <a href="{% url 'user_profile' pk=post.user.id %}"  class="post-username">{{post.user.username}}</a>
+                  <span class="post-location">📍 {{post.location}}</span>
+                </div>
+                <button class="post-menu-btn">···</button>
+              </div>
+              <div class="post-image-wrap">
+                <img src="{{post.image.url}}" alt="Post" loading="lazy" />
+              </div>
+              <div class="post-actions">
+                <div class="left">
+                  <a href="{% url 'post_like' pk=post.id%}" class="action-btn like-btn">🤍</a>
+                  <button class="action-btn" title="Comment">💬</button>
+                  <button class="action-btn" title="Share">📤</button>
+                </div>
+                <button class="action-btn save-btn" title="Save">🏷️</button>
+              </div>
+              <div class="post-likes"><span class="likes-count">{{post.like_post.count}}</span> likes</div>
+              <div class="post-caption">
+                <span class="uname">{{post.user.username}}</span>
+                {{post.caption}}
+                <span class="more"> more</span>
+              </div>
+              <a  href="{% url 'comment_view' pk=post.id%}"  class="post-comments-link" data-open-modal="post-view-modal">View comments</a>
+              <div class="post-add-comment">
+                <!-- <form method='post' action="{% url 'post_comment' pk=post.id %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="comment-avatar-sm"><img src="{{ uid.profile_pic.url }}" alt="me" /></div>
+                    <input class="comment-input-field" type="text" placeholder="Add a comment…" name="comment"  />
+                    <button type="submit" class="comment-post-btn">Post</button>
+                </form> -->
+                <form method="POST" action="{% url 'post_comment' post.id %}">
+                  {% csrf_token %}
+
+                  <input type="text" name="comment">
+
+                  <button type="submit">Post</button>
+                </form>
+              </div>
+              <div class="post-timestamp">{{ post.whenpublished }}</div>
+            </article>
+              <div class="modal-backdrop" id="post-view-modal">
+                      <div class="modal-card post-view-card">
+            <div class="post-view-body">
+              <!-- Image side -->
+              <!-- <div class="post-view-img">
+                <img src="https://picsum.photos/seed/chid1/640/640" alt="Post" />
+              </div> -->
+              <!-- Right panel -->
+              <!-- <div class="post-view-right">
+                <div class="modal-header">
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="width:32px;height:32px;border-radius:50%;overflow:hidden;"><img
+                        src="https://i.pravatar.cc/150?img=1" style="width:100%;height:100%;object-fit:cover;" alt="" /></div>
+                    <strong>aarav_k</strong>
+                  </div>
+                  <span class="modal-close" data-close-modal="post-view-modal">✕</span>
+                </div>
+                <div class="post-view-comments-list">
+                  <div class="comment-item">
+                    <div class="comment-item-ava"><img src="https://i.pravatar.cc/150?img=1" alt="" /></div>
+                    <div>
+                      <div class="comment-item-body"><strong>aarav_k</strong> Golden hour magic ✨🌅</div>
+                      <div class="comment-item-time">2h · <span class="comment-item-reply">Reply</span></div>
+                    </div>
+                  </div>
+                  <div class="comment-item">
+                    <div class="comment-item-ava"><img src="https://i.pravatar.cc/150?img=5" alt="" /></div>
+                    <div>
+                      <div class="comment-item-body"><strong>priya.s</strong> Absolutely stunning 😍🔥</div>
+                      <div class="comment-item-time">1h 30m · <span class="comment-item-reply">Reply</span></div>
+                    </div>
+                  </div>
+                  <div class="comment-item">
+                    <div class="comment-item-ava"><img src="https://i.pravatar.cc/150?img=8" alt="" /></div>
+                    <div>
+                      <div class="comment-item-body"><strong>rohit_m</strong> The colours are unreal! <i
+                          class="ph ph-palette"></i></div>
+                      <div class="comment-item-time">58m · <span class="comment-item-reply">Reply</span></div>
+                    </div>
+                  </div>
+                  <div class="comment-item">
+                    <div class="comment-item-ava"><img src="https://i.pravatar.cc/150?img=12" alt="" /></div>
+                    <div>
+                      <div class="comment-item-body"><strong>dev.p</strong> I need to visit Mumbai soon 🏙️</div>
+                      <div class="comment-item-time">22m · <span class="comment-item-reply">Reply</span></div>
+                    </div>
+                  </div>
+                </div>
+                <div style="border-top:1px solid var(--border);">
+                  <div class="post-actions" style="padding:10px 12px 6px">
+                    <div class="left">
+                      <button class="action-btn like-btn">🤍</button>
+                      <button class="action-btn">💬</button>
+                      <button class="action-btn">📤</button>
+                    </div>
+                    <button class="action-btn save-btn">🏷️</button>
+                  </div>
+                  <div class="post-likes" style="padding:0 14px 6px"><span class="likes-count">3,247</span> likes</div>
+                  <div class="post-add-comment">
+                    <div class="comment-avatar-sm"><img src="https://i.pravatar.cc/150?img=3" alt="me" /></div>
+                    <input class="comment-input-field" type="text" placeholder="Add a comment…" />
+                    <button class="comment-post-btn">Post</button>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+  
+  </div>  
+            {% endfor %}
+          </div><!-- /feed-center -->
+
+          <!-- ── RIGHT SIDEBAR ── -->
+          <aside class="right-col">
+            <div class="sticky-col">
+              <!-- Me -->
+              <div class="me-card">
+                <a href="profile.html" class="me-avatar"><img src="{{uid.profile_pic.url}}"
+                    alt="{{uid.username}}" /></a>
+                <div class="me-info">
+                  <div class="me-username">{{uid.username}}</div>
+                  <div class="me-name">{{uid.name}}</div>
+                </div>
+                <a href="{% url 'logout' %}" class="me-switch">Logout</a>
+              </div>
+              <!-- Suggestions -->
+              <div class="section-header">
+                <h4>Suggested for you</h4>
+                <a href="search.html">See all</a>
+              </div>
+              {% for user in users%}
+              {% if user.id not in my_following %}
+              <div class="suggest-item">
+                <div class="suggest-avatar"><img src="{{user.profile_pic.url}}" alt="nikhil.v" /></div>
+                <div class="suggest-info">
+                  <div class="suggest-uname">{{user.username}}</div>
+                  <div class="suggest-sub">{{user.name}}</div>
+                </div>
+                <a href="{% url 'follow_unfollow' pk=user.id%}" class="follow-btn">Follow</a>
+              </div>
+              {%endif%}
+              {%endfor%}
+              <!-- Footer -->
+              <div class="footer-links">
+                About · Help · Press · API · Jobs · Privacy · Terms<br>
+                Locations · Language · Verified · Hashtags<br><br>
+                © 2025 Chidiyaa — Desi Social Labs 🐦
+              </div>
+            </div>
+          </aside>
+
+        </div><!-- /feed-layout -->
+    </main>
+
+  </div><!-- /app-shell -->
+
+  <!-- ══════════════════════════════════════
+     MOBILE BOTTOM NAV
+══════════════════════════════════════ -->
+  <nav class="mobile-bottomnav">
+    <a href="{% url 'index' %}" class="mobile-nav-item active">🏠</a>
+    <a href="search.html" class="mobile-nav-item">🔍</a>
+    <a href="create.html" class="mobile-nav-item">➕</a>
+    <a href="reels.html" class="mobile-nav-item">🎬</a>
+    <a href="profile.html" class="mobile-nav-item"><img src="https://i.pravatar.cc/40?img=3"
+        style="width:26px;height:26px;border-radius:50%;object-fit:cover;" alt="" /></a>
+  </nav>
+
+  <!-- ══════════════════════════════════════
+     STORY VIEWER MODAL
+══════════════════════════════════════ -->
+  <div class="modal-backdrop" id="story-modal">
+    <div class="story-modal-card">
+      <!-- Progress bars -->
+      <div class="story-prog-bars">
+        <div class="story-prog-bar">
+          <div class="story-prog-fill"></div>
+        </div>
+        <div class="story-prog-bar">
+          <div class="story-prog-fill"></div>
+        </div>
+        <div class="story-prog-bar">
+          <div class="story-prog-fill"></div>
+        </div>
+        <div class="story-prog-bar">
+          <div class="story-prog-fill"></div>
+        </div>
+        <div class="story-prog-bar">
+          <div class="story-prog-fill"></div>
+        </div>
+        <div class="story-prog-bar">
+          <div class="story-prog-fill"></div>
+        </div>
+      </div>
+      <!-- Header -->
+      <div class="story-modal-header">
+        <div class="story-modal-ava"><img src="https://i.pravatar.cc/150?img=1" alt="" /></div>
+        <div>
+          <div class="story-modal-uname">aarav_k</div>
+          <div class="story-modal-time">2h ago</div>
+        </div>
+        <span class="story-modal-close" data-close-modal="story-modal">✕</span>
+      </div>
+      <!-- Story content -->
+      <div class="story-modal-placeholder" style="background:linear-gradient(160deg,#f7971e,#e8603a,#8e44ad)">🌅</div>
+      <!-- Nav -->
+      <button class="story-nav-prev">‹</button>
+      <button class="story-nav-next">›</button>
+      <!-- Reply -->
+      <div class="story-reply-bar">
+        <input class="story-reply-input" type="text" placeholder="Reply to story…" />
+        <div class="story-react-btns">❤️ 😂 🔥</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+     POST VIEW MODAL
+══════════════════════════════════════ -->
+
+  <script src="{% static 'myapp/js/script.js' %}"></script>
+
+</body>
+
+</html>
+
+<!-- pyar pehle bhi tha ya dikhava karte the..
+waqt ko kusur mat do
+waqt to pehle bhi nahi tha tum nikala karte the -->

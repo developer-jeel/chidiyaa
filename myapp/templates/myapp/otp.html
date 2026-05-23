@@ -1,0 +1,153 @@
+{% load static %}
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chidiyaa — Log in</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐦</text></svg>" />
+  <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'myapp/css/otp.css' %}" />
+</head>
+<body>
+<div class="page">
+
+  <!-- LEFT -->
+  <div class="left-panel">
+    <div class="deco-ring" style="width:500px;height:500px;bottom:-200px;right:-200px;"></div>
+    <div class="deco-ring" style="width:300px;height:300px;bottom:-80px;right:-80px;"></div>
+
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 2L15 6V12L9 16L3 12V6L9 2Z" stroke="#c9a96e" stroke-width="1.2" fill="none"/>
+          <circle cx="9" cy="9" r="2.5" fill="#c9a96e" opacity="0.6"/>
+        </svg>
+      </div>
+      <span class="brand-name">AURUM</span>
+    </div>
+
+    <div class="left-deco-num">02</div>
+
+    <div class="left-content">
+      <p class="left-eyebrow">Verification</p>
+      <h1 class="left-heading">Check your<br><em>inbox.</em></h1>
+      <p class="left-body">We sent a 4-digit code to your email address. Enter it on the right to continue.</p>
+
+      <div class="email-chip">
+        <div class="email-chip-dot"></div>
+        <span class="email-chip-text">Code sent to you@example.com</span>
+      </div>
+    </div>
+
+    <div class="left-footer">
+      Didn't receive an email? Check your spam folder or<br>
+      <a href="step1-email.html">try a different address →</a>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <form action="{% url 'otp' %}" method="post">
+            {% csrf_token %}
+  <div class="right-panel">
+
+    <div class="step-tracker">
+      <div class="step-item">
+        <div class="step-circle done"></div>
+        <span class="step-name done">Email</span>
+      </div>
+      <div class="step-line done"></div>
+      <div class="step-item">
+        <div class="step-circle active">2</div>
+        <span class="step-name active">Verify</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item">
+        <div class="step-circle idle">3</div>
+        <span class="step-name">Password</span>
+      </div>
+    </div>
+
+    <div class="form-head">
+      <input type="hidden" name="email" value="{{ email }}">
+      <p class="form-eyebrow">Step 2 of 3</p>
+      <h2 class="form-title">Enter your OTP</h2>
+      <p class="form-sub">We sent a code to <strong>you@example.com</strong>. It expires in 10 minutes.</p>
+    </div>
+
+    <div class="form-body">
+
+      <div class="otp-section">
+        <p class="otp-label">4-digit code</p>
+        <div class="otp-row">
+          <input class="otp-box" type="text" maxlength="4" inputmode="numeric" pattern="[0-9]{4}" placeholder="- - - -" name="onetime">
+        </div>
+
+        <div class="timer-row">
+          <span class="timer-text">Code expires in</span>
+          <span id="timer" class="timer-num">3:00</span>
+        </div>
+      </div>
+
+      <div class="security-note">
+        <span class="security-note-icon">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 1L14 4V8c0 3.5-2.5 5.5-6 7-3.5-1.5-6-3.5-6-7V4L8 1Z" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M8 6v3M8 11h.01" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <p class="security-note-text">This code can only be used once and will expire after 10 minutes. Never share it with anyone.</p>
+      </div>
+      
+      <input class="btn-verify" type="submit" value="Continue">
+      <!-- <a href="{% url 'resetpassword' %}" class="btn-verify">
+        Verify & continue
+        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a> -->
+
+      <div class="resend-row">
+        <span>Didn't get the code?</span>
+        <button class="btn-resend">Resend OTP</button>
+      </div>
+
+      <a href="step1-email.html" class="back-link">
+        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back to email
+      </a>
+
+    </div>
+  </div>
+  </form>
+
+</div>
+</body>
+<script>
+  let timer_value = document.getElementById("timer")
+  let time = 180  
+
+  let timer_interval = setInterval(() => {
+
+    if (time <= 0) {
+      clearInterval(timer_interval)
+      timer_value.innerHTML = "Expired"
+    } 
+    else {
+      let min = Math.floor(time / 60)
+      let sec = time % 60
+
+      sec = sec < 10 ? "0" + sec : sec
+
+      timer_value.innerHTML = min + ":" + sec
+
+      time--
+    }
+
+  }, 1000);
+</script>
+</script>
+</html>

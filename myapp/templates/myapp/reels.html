@@ -1,0 +1,310 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chidiyaa — Reels</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐦</text></svg>" />
+
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <!-- Main app styles -->
+  <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}" />
+
+  <!-- Reels-specific styles (separate file) -->
+  <link rel="stylesheet" href="{% static 'myapp/css/reels.css' %}" />
+</head>
+
+<body class="reels-page">
+
+  <!-- ══════════════════════════════════════════
+       SIDEBAR  (unchanged from your main layout)
+  ══════════════════════════════════════════ -->
+  <aside class="sidebar">
+    <a href="{% url 'index' %}" class="sidebar-brand">
+      <div class="sidebar-brand-icon">🐦</div>
+      <span class="sidebar-brand-name">Chidiyaa</span>
+    </a>
+    <nav class="sidebar-nav">
+      <a href="{% url 'index' %}" class="nav-link"><i class="ph ph-house nav-icon"></i><span>Home</span></a>
+      <a href="{% url 'search' %}" class="nav-link"><i
+          class="ph ph-magnifying-glass nav-icon"></i><span>Search</span></a>
+      <a href="{% url 'search' %}" class="nav-link"><i class="ph ph-compass nav-icon"></i><span>Explore</span></a>
+      <a href="{% url 'reels' %}" class="nav-link active"><i
+          class="ph ph-video-camera nav-icon"></i><span>Reels</span></a>
+      <a href="{% url 'messages' %}" class="nav-link"><i
+          class="ph ph-chat-circle nav-icon"></i><span>Messages</span><span class="nav-badge">3</span></a>
+      <a href="{% url 'notifications' %}" class="nav-link"><i
+          class="ph ph-bell nav-icon"></i><span>Notifications</span><span class="nav-badge">9</span></a>
+      <a href="{% url 'create' %}" class="nav-link"><i class="ph ph-plus-circle nav-icon"></i><span>Create</span></a>
+      <a href="{% url 'profile' %}" class="nav-link"><i class="ph ph-user nav-icon"></i><span>Profile</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-divider"></div>
+      <div class="dark-toggle-row">
+        <i class="ph ph-moon nav-icon"></i>
+        <span>Dark Mode</span>
+        <span class="toggle-pill"></span>
+      </div>
+      <a href="{% url 'login' %}" class="nav-link" style="color:var(--text-3)">
+        <span class="nav-icon">🚪</span><span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+
+  <!-- ══════════════════════════════════════════
+       TOP BAR  (fixed, sits above the scroll area)
+  ══════════════════════════════════════════ -->
+  <header class="reels-topbar">
+    <a href="{% url 'index' %}" class="reels-back-btn">
+      <i class="ph ph-arrow-left"></i> Back
+    </a>
+    <span class="reels-title-label">🎬 Reels</span>
+    <button class="reels-mute-btn" id="globalMute" title="Toggle mute">
+      <i class="ph ph-speaker-high" id="muteIcon"></i>
+    </button>
+  </header>
+
+
+  <!-- ══════════════════════════════════════════
+       REELS SCROLL VIEWPORT
+  ══════════════════════════════════════════ -->
+  <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="reels-viewport" id="reelsViewport">
+
+      <!-- ─── REEL 1 ─────────────────────────────────────────── -->
+      {%for reel in reels%}
+      <article class="reel-card" data-reel-id="1">
+
+        <!-- Blurred ambient background -->
+        <div class="reel-bg-blur" style="background: linear-gradient(160deg,#0f0c29,#302b63,#24243e);"></div>
+
+        <!-- 9:16 video surface -->
+        <div class="reel-video-wrap">
+
+          <!-- Progress bar -->
+          <div class="reel-progress">
+            <div class="reel-progress-fill"></div>
+          </div>
+
+          <!-- Thumbnail / video placeholder -->
+          <!-- <div class="reel-thumb">
+            <video class="reel-video" width="100%" height="100%" muted loop>
+              <source src="{{ reel.video.url }}" type="video/mp4">
+            </video>
+          </div> -->
+          <video src="{{ reel.video.url }}" autoplay loop muted class="w-full h-full object-cover"></video>
+          <!-- Tap-to-play -->
+
+          <!-- <div class="reel-tap-overlay">
+            <button class="reel-play-btn" aria-label="Play / Pause">
+              <i class="ph ph-play-fill"></i>
+            </button>
+          </div> -->
+
+          <!-- Right-side action rail -->
+          <aside class="reel-actions">
+
+
+            <!-- Like -->
+            <!-- <button class="reel-action-btn" data-action="like" aria-label="Like"> -->
+            <a href="{% url 'post_like' pk=reel.id%}" class="reel-action-btn" data-action="like" aria-label="Like">
+              <span class="icon"><i class="ph ph-heart"></i></span>
+              <span class="label">{{ reel.like_reel.count }}</span>
+            </a>
+            <!-- Comment -->
+            <button class="reel-action-btn" data-action="comment" aria-label="Comment">
+              <span class="icon"><i class="ph ph-chat-circle-dots"></i></span>
+              <span class="label">2.1K</span>
+            </button>
+
+            <!-- Share -->
+            <button class="reel-action-btn" data-action="share" aria-label="Share">
+              <span class="icon"><i class="ph ph-paper-plane-tilt"></i></span>
+              <span class="label">Share</span>
+            </button>
+
+            <!-- Save / Bookmark -->
+            <button class="reel-action-btn" data-action="save" aria-label="Save">
+              <span class="icon"><i class="ph ph-bookmark-simple"></i></span>
+              <span class="label">Save</span>
+            </button>
+
+            <!-- More options -->
+            <!-- <button class="reel-action-btn" data-action="more" aria-label="More options">
+              <span class="icon"><i class="ph ph-dots-three-outline-vertical-fill"></i></span>
+              <span class="label"></span>
+            </button> -->
+
+            <!-- Spinning audio disc -->
+            <!-- <div class="reel-audio-disc" title="Original audio">🎵</div> -->
+
+          </aside>
+
+          <!-- Bottom info -->
+          <footer class="reel-info">
+            <div class="reel-author-row">
+              <img class="reel-author-pic" src="{{ reel.user.profile_pic.url}}" alt="aarav_k" />
+              <span class="reel-author-name">{{reel.user.username}}</span>
+              <button class="reel-follow-btn">Follow</button>
+            </div>
+
+            <p class="reel-caption">
+              {{reel.caption}}
+            </p>
+            <span class="reel-caption-more">more</span>
+
+            <!-- <div class="reel-audio-bar">
+              <span class="reel-audio-icon">🎵</span>
+              <span class="reel-audio-ticker">Tum Hi Ho — Aashiqui 2 · Original Audio · aarav_k</span>
+            </div> -->
+          </footer>
+
+        </div><!-- /reel-video-wrap -->
+      </article>
+      {%endfor%}
+      <!-- ─── /REEL 1 ───────────────────────────────────────── -->
+
+    </div><!-- /reels-viewport -->
+  </form>
+
+  <!-- ══════════════════════════════════════════
+       SCRIPTS
+  ══════════════════════════════════════════ -->
+  <script src="{% static 'myapp/js/script.js' %}"></script>
+  <script>
+
+    /* ───────────────── VIDEO + AUDIO CONTROL ───────────────── */
+    let globalMuted = false;
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const video = entry.target.querySelector('video');
+        const fill = entry.target.querySelector('.reel-progress-fill');
+
+        if (!video) return;
+
+        if (entry.isIntersecting) {
+
+          // Pause + mute all other videos
+          document.querySelectorAll('.reel-card video').forEach(v => {
+            if (v !== video) {
+              v.pause();
+              v.muted = true;
+            }
+          });
+
+          // Play current video
+          video.play();
+
+          // Audio logic
+          video.muted = globalMuted ? true : false;
+
+          // Progress bar start
+          if (fill) {
+            fill.style.transition = 'width 15s linear';
+            fill.style.width = '100%';
+          }
+
+        } else {
+          video.pause();
+          video.muted = true;
+
+          if (fill) {
+            fill.style.transition = 'none';
+            fill.style.width = '0%';
+          }
+        }
+      });
+    }, { threshold: 0.6 });
+
+    document.querySelectorAll('.reel-card').forEach(card => observer.observe(card));
+
+
+    /* ───────────────── GLOBAL MUTE BUTTON ───────────────── */
+    const muteBtn = document.getElementById('globalMute');
+    const muteIcon = document.getElementById('muteIcon');
+
+    muteBtn.addEventListener('click', () => {
+      globalMuted = !globalMuted;
+
+      document.querySelectorAll('.reel-card video').forEach(video => {
+        video.muted = globalMuted;
+      });
+
+      muteIcon.className = globalMuted
+        ? 'ph ph-speaker-slash'
+        : 'ph ph-speaker-high';
+    });
+
+
+    /* ───────────────── LIKE BUTTON ───────────────── */
+    document.querySelectorAll('[data-action="like"]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.classList.toggle('liked');
+
+        const icon = btn.querySelector('.icon i');
+        const label = btn.querySelector('.label');
+
+        const liked = btn.classList.contains('liked');
+
+        icon.className = liked ? 'ph ph-heart-fill' : 'ph ph-heart';
+
+        // fake count change
+        const raw = label.textContent.trim();
+        const base = parseFloat(raw);
+        const unit = raw.replace(/[\d.]/g, '');
+
+        label.textContent = liked
+          ? (base + 0.1).toFixed(1).replace(/\.0$/, '') + unit
+          : (base - 0.1).toFixed(1).replace(/\.0$/, '') + unit;
+      });
+    });
+
+
+    /* ───────────────── SAVE BUTTON ───────────────── */
+    document.querySelectorAll('[data-action="save"]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.classList.toggle('liked');
+
+        const icon = btn.querySelector('.icon i');
+
+        icon.className = btn.classList.contains('liked')
+          ? 'ph ph-bookmark-simple-fill'
+          : 'ph ph-bookmark-simple';
+      });
+    });
+
+
+    /* ───────────────── FOLLOW BUTTON ───────────────── */
+    document.querySelectorAll('.reel-follow-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const isFollowing = btn.classList.toggle('active');
+        btn.textContent = isFollowing ? 'Following' : 'Follow';
+      });
+    });
+
+
+    /* ───────────────── CAPTION EXPAND ───────────────── */
+    document.querySelectorAll('.reel-caption-more').forEach(more => {
+      more.addEventListener('click', () => {
+        const caption = more.previousElementSibling;
+
+        caption.classList.toggle('expanded');
+
+        more.textContent = caption.classList.contains('expanded')
+          ? 'less'
+          : 'more';
+      });
+    });
+
+  </script>
+</body>
+
+</html>

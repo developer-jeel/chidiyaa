@@ -1,0 +1,196 @@
+{% load static %}
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chidiyaa — Notifications</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐦</text></svg>" />
+  <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}" />
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a href="{% url 'index' %}" class="sidebar-brand">
+        <div class="sidebar-brand-icon">🐦</div><span class="sidebar-brand-name">Chidiyaa</span>
+      </a>
+      <nav class="sidebar-nav">
+        <a href="{% url 'index' %}" class="nav-link"><i class="ph ph-house nav-icon"></i><span>Home</span></a>
+        <a href="{% url 'search' %}" class="nav-link"><i
+            class="ph ph-magnifying-glass nav-icon"></i><span>Search</span></a>
+        <a href="{% url 'search' %}" class="nav-link"><i class="ph ph-compass nav-icon"></i><span>Explore</span></a>
+        <a href="{% url 'reels' %}" class="nav-link"><i class="ph ph-video-camera nav-icon"></i><span>Reels</span></a>
+        <a href="{% url 'messages' %}" class="nav-link "><i
+            class="ph ph-chat-circle nav-icon"></i><span>Messages</span><span class="nav-badge">3</span></a>
+        <a href="{% url 'notifications' %}" class="nav-link active"><i
+            class="ph ph-bell nav-icon"></i><span>Notifications</span><span class="nav-badge">9</span></a>
+        <a href="{% url 'create' %}" class="nav-link"><i class="ph ph-plus-circle nav-icon"></i><span>Create</span></a>
+        <a href="{% url 'profile' %}" class="nav-link"><i class="ph ph-user nav-icon"></i><span>Profile</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-divider"></div>
+        <div class="dark-toggle-row"><i class="ph ph-moon nav-icon"></i><span>Dark Mode</span><span
+            class="toggle-pill"></span></div>
+        <a href="login.html" class="nav-link" style="color:var(--text-3)"><i
+            class="ph ph-sign-out nav-icon"></i><span>Logout</span></a>
+      </div>
+    </aside>
+
+    <main class="page-content">
+      <form action="" method="post" enctype="multipart/form-data">
+
+        <header class="mobile-topbar">
+          <span class="mobile-brand">Notifications</span>
+          <div class="mobile-topbar-actions"><button class="theme-toggle-btn"><i class="ph ph-moon"></i></button></div>
+        </header>
+
+        <div class="notifs-layout">
+          <h2>🔔 Notifications</h2>
+
+          <!-- <div class="notif-group-label">Today</div> -->
+          {%for notification in all_notifications%}
+
+          <div class="notif-item unseen" style="animation-delay:.05s">
+            <div class="notif-ava">
+              <img src="{{notification.sender.profile_pic.url}}" alt="aarav_k" />
+              <div class="notif-type-badge ntb-like">❤️</div>
+            </div>
+            {% if notification.notification_type == 'follow'%}
+            <div class="notif-text">
+              <strong>{{notification.sender.username}}</strong> {{notification.message}}
+              <span class="notif-time">· {{ notification.whenpublished }}</span>
+            </div>
+            {% if notification.sender not in my_following %}
+            <a href="{% url 'follow_unfollow' pk=notification.sender.id%}" class="notif-follow-btn">Follow Back</a>
+            {% else %}
+            <a href="{% url 'follow_unfollow' pk=notification.sender.id%}" class="notif-follow-btn">Following</a>
+            {% endif %}
+
+            {% elif notification.notification_type == 'like'%}
+            <div class="notif-text">
+              <strong>{{notification.sender.username}}</strong> {{notification.message}}
+              <span class="notif-time">· {{ notification.whenpublished }}</span>
+            </div>
+            <img class="notif-thumb" src="{{notification.post_fk.image.url}}" alt="" />
+            {%endif%}
+          </div>
+          {%endfor%}
+
+          <!-- <div class="notif-item unseen" style="animation-delay:.1s">
+        <div class="notif-ava">
+          <img src="https://i.pravatar.cc/150?img=20" alt="nikhil.v"/>
+          <div class="notif-type-badge ntb-follow">👤</div>
+        </div>
+        <div class="notif-text">
+          <strong>nikhil.v</strong> started following you.
+          <span class="notif-time">· 18m ago</span>
+        </div>
+        <button class="notif-follow-btn">Follow Back</button>
+      </div>
+
+      <div class="notif-item unseen" style="animation-delay:.15s">
+        <div class="notif-ava">
+          <img src="https://i.pravatar.cc/150?img=5" alt="priya.s"/>
+          <div class="notif-type-badge ntb-comment">💬</div>
+        </div>
+        <div class="notif-text">
+          <strong>priya.s</strong> commented: "Absolutely stunning 😍🔥"
+          <span class="notif-time">· 1h ago</span>
+        </div>
+        <img class="notif-thumb" src="https://picsum.photos/seed/p2/80/80" alt="" />
+      </div>
+
+      <div class="notif-item" style="animation-delay:.2s">
+        <div class="notif-ava">
+          <img src="https://i.pravatar.cc/150?img=8" alt="rohit_m"/>
+          <div class="notif-type-badge ntb-like">❤️</div>
+        </div>
+        <div class="notif-text">
+          <strong>rohit_m</strong> liked your photo.
+          <span class="notif-time">· 3h ago</span>
+        </div>
+        <img class="notif-thumb" src="https://picsum.photos/seed/p3/80/80" alt="" />
+      </div>
+
+      <div class="notif-item" style="animation-delay:.25s">
+        <div class="notif-ava">
+          <img src="https://i.pravatar.cc/150?img=22" alt="aisha.m"/>
+          <div class="notif-type-badge ntb-follow">👤</div>
+        </div>
+        <div class="notif-text">
+          <strong>aisha.m</strong> started following you.
+          <span class="notif-time">· 5h ago</span>
+        </div>
+        <button class="notif-follow-btn following">Following</button>
+      </div>
+
+      <div class="notif-item" style="animation-delay:.3s">
+        <div class="notif-ava">
+          <img src="https://i.pravatar.cc/150?img=12" alt="dev.p"/>
+          <div class="notif-type-badge ntb-mention">@</div>
+        </div>
+        <div class="notif-text">
+          <strong>dev.p</strong> mentioned you in a comment: "Have you seen <strong>@meera_j</strong>'s shots?"
+          <span class="notif-time">· 7h ago</span>
+        </div>
+        <img class="notif-thumb" src="https://picsum.photos/seed/p4/80/80" alt="" />
+      </div>
+
+      <div class="notif-group-label">This Week</div>
+
+      <div class="notif-item" style="animation-delay:.35s">
+        <div class="notif-ava">
+          <img src="https://i.pravatar.cc/150?img=9" alt="sneha.d"/>
+          <div class="notif-type-badge ntb-like">❤️</div>
+        </div>
+        <div class="notif-text">
+          <strong>sneha.d</strong> and <strong>14 others</strong> liked your photo.
+          <span class="notif-time">· 2 days ago</span>
+        </div>
+        <img class="notif-thumb" src="https://picsum.photos/seed/p5/80/80" alt="" />
+      </div>
+
+      <div class="notif-item" style="animation-delay:.4s">
+        <div class="notif-ava">
+          <img src="https://i.pravatar.cc/150?img=15" alt="kavya.r"/>
+          <div class="notif-type-badge ntb-comment">💬</div>
+        </div>
+        <div class="notif-text">
+          <strong>kavya.r</strong> replied to your comment: "Same vibes! ✨"
+          <span class="notif-time">· 3 days ago</span>
+        </div>
+        <img class="notif-thumb" src="https://picsum.photos/seed/p6/80/80" alt="" />
+      </div>
+
+      <div class="notif-item" style="animation-delay:.45s">
+        <div class="notif-ava">
+          <img src="https://i.pravatar.cc/150?img=25" alt="vikram.s"/>
+          <div class="notif-type-badge ntb-follow">👤</div>
+        </div>
+        <div class="notif-text">
+          <strong>vikram.s</strong> started following you.
+          <span class="notif-time">· 4 days ago</span>
+        </div>
+        <button class="notif-follow-btn">Follow Back</button>
+      </div> -->
+
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <nav class="mobile-bottomnav">
+    <a href="index.html" class="mobile-nav-item">🏠</a>
+    <a href="search.html" class="mobile-nav-item">🔍</a>
+    <a href="create.html" class="mobile-nav-item">➕</a>
+    <a href="reels.html" class="mobile-nav-item">🎬</a>
+    <a href="profile.html" class="mobile-nav-item"><img src="https://i.pravatar.cc/40?img=3"
+        style="width:26px;height:26px;border-radius:50%;object-fit:cover;" alt="" /></a>
+  </nav>
+
+  <script src="{% static 'myapp/js/script.js' %}"></script>
+</body>
+
+</html>

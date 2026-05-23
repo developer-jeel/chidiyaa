@@ -1,0 +1,240 @@
+{% load static %}
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Comments on {{post.user.username}}'s post</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐦</text></svg>" />
+  <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}" />
+  <style>
+    /* Background with full index page */
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    
+    .background-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      z-index: -1;
+      filter: blur(5px) brightness(0.7);
+      transform: scale(1.02); /* Prevents blur edge artifacts */
+    }
+    
+    /* Glass morphism modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+    
+    .comments-modal {
+      width: 90%;
+      max-width: 1000px;
+      height: 80vh;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      display: flex;
+    }
+    
+    /* Modal Structure */
+    .post-view-img {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+    }
+    
+    .post-view-img img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    
+    .post-view-right {
+      flex: 0 0 400px;
+      display: flex;
+      flex-direction: column;
+      background: white;
+    }
+    
+    /* Header */
+    .modal-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    /* Close Button */
+    .modal-close {
+      font-size: 1.5em;
+      cursor: pointer;
+      color: #333;
+      text-decoration: none;
+    }
+    
+    /* Comments Section */
+    .post-view-comments-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+    }
+    
+    /* Comment Items */
+    .comment-item {
+      display: flex;
+      margin-bottom: 16px;
+    }
+    
+    .comment-item-ava {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 12px;
+    }
+    
+    .comment-item-ava img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .comment-item-body {
+      margin-bottom: 4px;
+    }
+    
+    .comment-item-time {
+      font-size: 0.8em;
+      color: var(--text-2);
+    }
+    
+    /* Footer with comment form */
+    .comment-footer {
+      border-top: 1px solid var(--border);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .comments-modal {
+        flex-direction: column;
+        height: 90vh;
+        width: 95%;
+      }
+      
+      .post-view-img {
+        flex: 0 0 300px;
+      }
+      
+      .post-view-right {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Background - Full index page -->
+    <div class="background-container">
+        {% include 'myapp/index.html' %}
+    </div>
+  
+  <!-- Modal Overlay -->
+  <div class="modal-overlay">
+    <div class="comments-modal">
+      <!-- Image side -->
+      <div class="post-view-img">
+        <img src="{{post.image.url}}" alt="Post" />
+      </div>
+      
+      <!-- Right panel -->
+      <div class="post-view-right">
+        <div class="modal-header">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:32px;height:32px;border-radius:50%;overflow:hidden;">
+              <img src="{{post.user.profile_pic.url}}" style="width:100%;height:100%;object-fit:cover;" alt="" />
+            </div>
+            <strong>{{post.user.username}}</strong>
+          </div>
+          <a href="{% url 'index' %}" class="modal-close">✕</a>
+        </div>
+        
+        <!-- Comments List -->
+        <div class="post-view-comments-list">
+          {% for comment in comments %}
+          <div class="comment-item">
+            <div class="comment-item-ava">
+              <img src="{{comment.user_fk.profile_pic.url}}" alt="{{comment.user_fk.username}}" />
+            </div>
+            <div>
+              <div class="comment-item-body">
+                <strong>{{comment.user_fk.username}}</strong> {{comment.comment}}
+              </div>
+              <div class="comment-item-time">
+                {{comment.created_at|timesince}} ago · 
+                <span class="comment-item-reply">Reply</span>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <div class="no-comments" style="text-align:center; padding:20px; color:#666;">No comments yet</div>
+          {% endfor %}
+        </div>
+        
+        <!-- Comment Form -->
+        <div class="comment-footer">
+          <div class="post-actions" style="padding:10px 12px 6px">
+            <div class="left">
+              <a href="{% url 'post_like' pk=post.id%}" class="action-btn like-btn">🤍</a>
+              <button class="action-btn">💬</button>
+              <button class="action-btn">📤</button>
+            </div>
+            <button class="action-btn save-btn">🏷️</button>
+          </div>
+          <div class="post-likes" style="padding:0 14px 6px">
+            <span class="likes-count">{{post.like_post.count}}</span> likes
+          </div>
+          <form method="POST" action="{% url 'post_comment' post.id %}" style="display:flex; padding:10px; border-top:1px solid #eee;">
+            {% csrf_token %}
+            <div class="comment-avatar-sm" style="width:32px;height:32px;border-radius:50%;overflow:hidden;">
+              <img src="{{request.user.profile_pic.url}}" style="width:100%;height:100%;object-fit:cover;" alt="me" />
+            </div>
+            <input class="comment-input-field" 
+                   type="text" 
+                   name="comment" 
+                   placeholder="Add a comment…" 
+                   style="flex:1; border:none; padding:8px; outline:none;" 
+                   required />
+            <button type="submit" 
+                    class="comment-post-btn" 
+                    style="background:none; border:none; color:#0095f6; font-weight:600; cursor:pointer;">
+              Post
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</body>
+</html>

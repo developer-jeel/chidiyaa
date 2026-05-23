@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chidiyaa — Upload Reel</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐦</text></svg>" />
+  <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'myapp/css/upload-reel.css' %}" />
+</head>
+
+<body>
+  <div class="app-shell">
+
+    <aside class="sidebar">
+      <a href="{% url 'index' %}" class="sidebar-brand">
+        <div class="sidebar-brand-icon">🐦</div><span class="sidebar-brand-name">Chidiyaa</span>
+      </a>
+      <nav class="sidebar-nav">
+        <a href="{% url 'index' %}" class="nav-link"><i class="ph ph-house nav-icon"></i><span>Home</span></a>
+        <a href="{% url 'search' %}" class="nav-link"><i
+            class="ph ph-magnifying-glass nav-icon"></i><span>Search</span></a>
+        <a href="{% url 'search' %}" class="nav-link"><i class="ph ph-compass nav-icon"></i><span>Explore</span></a>
+        <a href="{% url 'reels' %}" class="nav-link"><i class="ph ph-video-camera nav-icon"></i><span>Reels</span></a>
+        <a href="{% url 'messages' %}" class="nav-link "><i
+            class="ph ph-chat-circle nav-icon"></i><span>Messages</span><span class="nav-badge">3</span></a>
+        <a href="{% url 'notifications' %}" class="nav-link"><i
+            class="ph ph-bell nav-icon"></i><span>Notifications</span><span class="nav-badge">9</span></a>
+        <a href="{% url 'create' %}" class="nav-link active"><i class="ph ph-plus-circle nav-icon"></i><span>Create</span></a>
+        <a href="{% url 'profile' %}" class="nav-link"><i class="ph ph-user nav-icon"></i><span>Profile</span></a>
+        <div class="sidebar-footer">
+          <div class="sidebar-divider"></div>
+          <div class="dark-toggle-row"><i class="ph ph-moon nav-icon"></i><span>Dark Mode</span><span
+              class="toggle-pill"></span></div>
+          <a href="login.html" class="nav-link" style="color:var(--text-3)"><span
+              class="nav-icon">🚪</span><span>Logout</span></a>
+        </div>
+    </aside>
+    <main class="page-content">
+
+      <header class="mobile-topbar">
+        <span class="mobile-brand">Upload Reel 🎬</span>
+        <a href="{% url 'index' %}">
+          <button type="button" style="color:var(--accent);font-weight:700;font-size:14px;">✕</button>
+        </a>
+      </header>
+
+      <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="upload-layout">
+          <h1>Upload Reel 🎬</h1>
+          <p class="sub">MP4 · MOV · WEBM &nbsp;·&nbsp; Max 90 sec &nbsp;·&nbsp; Up to 512 MB</p>
+
+          <div class="upload-card">
+
+            <div class="drop-zone">
+              <div class="drop-icon">🎬</div>
+              <p class="drop-title">Select your video</p>
+              <p class="drop-hint">Vertical 9:16 recommended · 15–90 seconds</p>
+              <input type="file" name="reel_video" accept="video/*" required style="margin-top:8px;">
+            </div>
+
+            <div class="form-body">
+
+              <div>
+                <div class="field-label">Caption</div>
+                <textarea class="reel-textarea" name="caption" maxlength="2200"
+                  placeholder="Write a caption… #hashtags @mentions"></textarea>
+              </div>
+
+              <!-- <div class="row2">
+                <div>
+                  <div class="field-label">Location</div>
+                  <input type="text" class="reel-input" name="location" placeholder="Add location" />
+                </div>
+                <div>
+                  <div class="field-label">Audience</div>
+                  <select class="reel-select" name="audience">
+                    <option value="public">🌐 Everyone</option>
+                    <option value="followers">👥 Followers only</option>
+                    <option value="private">🔒 Only me</option>
+                  </select>
+                </div>
+              </div> -->
+
+              <div class="divider"></div>
+
+              <div>
+                <div class="field-label">Settings</div>
+                <div class="toggle-row">
+                  <span class="toggle-label">Allow comments</span>
+                  <label class="pill-toggle">
+                    <input type="checkbox" name="allow_comments" checked>
+                    <span class="pill-track"></span>
+                  </label>
+                </div>
+                <div class="toggle-row">
+                  <span class="toggle-label">Allow remixes</span>
+                  <label class="pill-toggle">
+                    <input type="checkbox" name="allow_remix" checked>
+                    <span class="pill-track"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="actions">
+                <a href="{% url 'index' %}" class="btn-discard"
+                  style="text-decoration:none;text-align:center;">Discard</a>
+                <button type="submit" class="btn-share">Share Reel 🐦</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <nav class="mobile-bottomnav">
+    <a href="{% url 'index' %}" class="mobile-nav-item">🏠</a>
+    <a href="{% url 'search' %}" class="mobile-nav-item">🔍</a>
+    <a href="{% url 'create' %}" class="mobile-nav-item">➕</a>
+    <a href="{% url 'reels' %}" class="mobile-nav-item active">🎬</a>
+    <a href="{% url 'profile' %}" class="mobile-nav-item">
+      <img src="{{ uid.profile_pic.url }}" onerror="this.src='https://i.pravatar.cc/40?img=3'"
+        style="width:26px;height:26px;border-radius:50%;object-fit:cover;" alt="" />
+    </a>
+  </nav>
+
+  <script src="{% static 'myapp/js/script.js' %}"></script>
+</body>
+
+</html>

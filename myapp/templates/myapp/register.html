@@ -1,0 +1,159 @@
+{% load static %}
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account - Chidiyaa</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐦</text></svg>" />
+  <link rel="stylesheet" href="{% static 'myapp/css/register.css' %}">
+</head>
+
+<body>
+
+  <div class="register-container">
+
+    <!-- ══════════════════════════════
+         LEFT — Branding Panel
+    ══════════════════════════════ -->
+    <div class="register-left">
+
+      <div class="register-brand">
+        <div class="register-brand-icon">🐦</div>
+        <span class="register-brand-name">Chidiyaa</span>
+      </div>
+
+      <h1>Join the <span>flock</span> today.</h1>
+      <p>Share moments, connect with people, and express yourself on India's favourite social platform.</p>
+
+      <div class="register-features">
+        <div class="register-feature">
+          <div class="register-feature-dot">📸</div>
+          <span>Share photos &amp; reels with your world</span>
+        </div>
+        <div class="register-feature">
+          <div class="register-feature-dot">💬</div>
+          <span>Message friends instantly</span>
+        </div>
+        <div class="register-feature">
+          <div class="register-feature-dot">🔔</div>
+          <span>Stay updated with notifications</span>
+        </div>
+        <div class="register-feature">
+          <div class="register-feature-dot">🌙</div>
+          <span>Dark mode support built-in</span>
+        </div>
+      </div>
+
+    </div>
+    <!-- /register-left -->
+
+    <!-- ══════════════════════════════
+         RIGHT — Register Form
+    ══════════════════════════════ -->
+    <div class="register-right">
+      <div class="register-card">
+
+        <h2>Create Account</h2>
+        <p class="sub-text">Already have one? <a href="{% url 'login' %}">Sign in →</a></p>
+
+        <!-- Error Alert -->
+        {% if e_msg %}
+        <div class="alert-error">
+          <div class="alert-content">
+            <span class="icon">⚠️</span>
+            <span class="message">{{ e_msg }}</span>
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- ── Form ── -->
+        <form method="POST" action="{% url 'register' %}">
+          {% csrf_token %}
+
+          <!-- Full Name + Username -->
+          <div class="row">
+            <div class="form-group">
+              <label for="full_name">Full Name</label>
+              <input type="text" id="full_name" name="full_name" placeholder="Meera Joshi" required
+                autocomplete="name" />
+            </div>
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" id="username" name="username" placeholder="meera_j" required autocomplete="username" />
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="meera@email.com" required autocomplete="email" />
+          </div>
+
+          <!-- Gender -->
+          <div class="gender-group">
+            <label>Gender</label>
+            <div class="gender-options">
+              <label class="gender-card">
+                <input type="radio" name="gender" value="male" required />
+                <span>👦 Male</span>
+              </label>
+              <label class="gender-card">
+                <input type="radio" name="gender" value="female" />
+                <span>👧 Female</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Password + Confirm -->
+          <div class="row">
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" id="password" name="password" placeholder="••••••••" required
+                autocomplete="new-password" />
+            </div>
+            <div class="form-group">
+              <label for="confirm_password">Confirm Password</label>
+              <input type="password" id="confirm_password" name="confirm_password" placeholder="••••••••" required
+                autocomplete="new-password" />
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" class="register-btn">
+            Create My Account 🐦
+          </button>
+
+        </form>
+        <!-- /form -->
+
+        <!-- Divider -->
+        <div class="divider">or</div>
+
+        <!-- Google -->
+        <button class="google-btn" type="button">
+          <span>🌐</span> Continue with Google
+        </button>
+
+        <!-- Terms -->
+        <p class="bottom-text">
+          By signing up you agree to our
+          <a href="#">Terms</a> &amp; <a href="#">Privacy Policy</a>.
+        </p>
+
+      </div>
+    </div>
+    <!-- /register-right -->
+
+  </div>
+  <!-- /register-container -->
+
+  <script>
+    const saved = localStorage.getItem('chidiyaaTheme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+  </script>
+
+</body>
+
+</html>

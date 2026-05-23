@@ -1,0 +1,150 @@
+{% load static %}
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chidiyaa — Home</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐦</text></svg>" />
+  <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}" />
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <a href="{% url 'index' %}" class="sidebar-brand"><div class="sidebar-brand-icon">🐦</div><span class="sidebar-brand-name">Chidiyaa</span></a>
+    <nav class="sidebar-nav">
+      <a href="{% url 'index' %}" class="nav-link"><i class="ph ph-house nav-icon"></i><span>Home</span></a>
+      <a href="{% url 'search' %}" class="nav-link active"><i class="ph ph-magnifying-glass nav-icon"></i><span>Search</span></a>
+      <a href="{% url 'search' %}" class="nav-link"><i class="ph ph-compass nav-icon"></i><span>Explore</span></a>
+      <a href="{% url 'reels' %}" class="nav-link"><i class="ph ph-video-camera nav-icon"></i><span>Reels</span></a>
+      <a href="{% url 'messages' %}" class="nav-link "><i class="ph ph-chat-circle nav-icon"></i><span>Messages</span><span class="nav-badge">3</span></a>
+      <a href="{% url 'notifications' %}" class="nav-link"><i class="ph ph-bell nav-icon"></i><span>Notifications</span><span class="nav-badge">9</span></a>
+      <a href="{% url 'create' %}" class="nav-link"><i class="ph ph-plus-circle nav-icon"></i><span>Create</span></a>
+      <a href="{% url 'profile' %}" class="nav-link"><i class="ph ph-user nav-icon"></i><span>Profile</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-divider"></div>
+      <div class="dark-toggle-row"><i class="ph ph-moon nav-icon"></i><span>Dark Mode</span><span class="toggle-pill"></span></div>
+      <a href="login.html" class="nav-link" style="color:var(--text-3)"><i class="ph ph-sign-out nav-icon"></i><span>Logout</span></a>
+    </div>
+  </aside>
+
+  <main class="page-content">
+    <header class="mobile-topbar">
+      <span class="mobile-brand">Explore</span>
+      <div class="mobile-topbar-actions"><button class="theme-toggle-btn"><i class="ph ph-moon"></i></button></div>
+    </header>
+
+    <div class="search-layout">
+      <!-- Search bar -->
+      <div class="search-input-wrap">
+        <span class="search-icon-left">🔍</span>
+        <input class="search-field" type="text" placeholder="Search people, places, hashtags…" />
+      </div>
+
+      <!-- Category chips -->
+      <div class="search-chips">
+        <button class="chip-btn active">All</button>
+        <button class="chip-btn">People 👤</button>
+        <button class="chip-btn">Photos 📸</button>
+        <button class="chip-btn">Reels 🎬</button>
+        <button class="chip-btn">Places 📍</button>
+        <button class="chip-btn">Audio 🎵</button>
+        <button class="chip-btn">Tags #</button>
+      </div>
+
+      <!-- Explore Grid (mosaic layout) -->
+      <div class="search-grid">
+        <!-- Row 1 -->
+        <div class="search-grid-item tall">
+          <img src="https://picsum.photos/seed/ex1/400/800" alt="" loading="lazy"/>
+          <div class="grid-post-overlay"><span>❤️ 22.1K</span><span>💬 874</span></div>
+        </div>
+        <div class="search-grid-item">
+          <img src="https://picsum.photos/seed/ex2/400/400" alt="" loading="lazy"/>
+          <div class="grid-post-overlay"><span>❤️ 8.4K</span></div>
+        </div>
+        <div class="search-grid-item">
+          <img src="https://picsum.photos/seed/ex3/400/400" alt="" loading="lazy"/>
+          <div class="grid-post-overlay"><span>❤️ 3.9K</span></div>
+        </div>
+        <div class="search-grid-item">
+          <img src="https://picsum.photos/seed/ex4/400/400" alt="" loading="lazy"/>
+          <div class="grid-post-overlay"><span>❤️ 11.2K</span></div>
+        </div>
+        <div class="search-grid-item">
+          <img src="https://picsum.photos/seed/ex5/400/400" alt="" loading="lazy"/>
+          <div class="grid-post-overlay"><span>❤️ 5.7K</span></div>
+        </div>
+        <!-- Row 2 -->
+        <div class="search-grid-item">
+          <img src="https://picsum.photos/seed/ex6/400/400" alt="" loading="lazy"/>
+          <div class="grid-post-overlay"><span>❤️ 14.3K</span></div>
+        </div>
+        <div class="search-grid-item tall">
+          <img src="https://picsum.photos/seed/ex7/400/800" alt="" loading="lazy"/>
+          <div class="grid-post-overlay"><span>❤️ 31K</span><span>💬 1.2K</span></div>
+        </div>
+        <div class="search-grid-item">
+          <img src="https://picsum.photos/seed/ex8/400/400" alt="" loading="lazy"/>
+          <div class="grid-post-overlay"><span>❤️ 6.1K</span></div>
+        </div>
+        <div class="search-grid-item">
+          <img src="https://picsum.photos/seed/ex9/400/400" alt="" loading="lazy"/>
+          <div class="grid-post-overlay"><span>❤️ 9.8K</span></div>
+        </div>
+        <div class="search-grid-item">
+          <img src="https://picsum.photos/seed/ex10/400/400" alt="" loading="lazy"/>
+          <div class="grid-post-overlay"><span>❤️ 4.2K</span></div>
+        </div>
+        <div class="search-grid-item">
+          <img src="https://picsum.photos/seed/ex11/400/400" alt="" loading="lazy"/>
+          <div class="grid-post-overlay"><span>❤️ 7.5K</span></div>
+        </div>
+        <div class="search-grid-item">
+          <img src="https://picsum.photos/seed/ex12/400/400" alt="" loading="lazy"/>
+          <div class="grid-post-overlay"><span>❤️ 2.8K</span></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Post view modal -->
+<div class="modal-backdrop" id="post-view-modal">
+  <div class="modal-card post-view-card">
+    <div class="post-view-body">
+      <div class="post-view-img"><img src="" alt="Post" /></div>
+      <div class="post-view-right">
+        <div class="modal-header">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:32px;height:32px;border-radius:50%;overflow:hidden;"><img src="https://i.pravatar.cc/150?img=1" style="width:100%;height:100%;object-fit:cover;" alt=""/></div>
+            <strong>aarav_k</strong>
+          </div>
+          <span class="modal-close" data-close-modal="post-view-modal">✕</span>
+        </div>
+        <div class="post-view-comments-list">
+          <div class="comment-item"><div class="comment-item-ava"><img src="https://i.pravatar.cc/150?img=5" alt=""/></div><div><div class="comment-item-body"><strong>priya.s</strong> Wow this is stunning 🔥</div><div class="comment-item-time">1h · <span class="comment-item-reply">Reply</span></div></div></div>
+        </div>
+        <div style="border-top:1px solid var(--border);">
+          <div class="post-actions" style="padding:10px 12px 6px">
+            <div class="left"><button class="action-btn like-btn">🤍</button><button class="action-btn">💬</button><button class="action-btn">📤</button></div>
+            <button class="action-btn save-btn">🏷️</button>
+          </div>
+          <div class="post-add-comment"><div class="comment-avatar-sm"><img src="https://i.pravatar.cc/150?img=3" alt=""/></div><input class="comment-input-field" type="text" placeholder="Add a comment…"/><button class="comment-post-btn">Post</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav class="mobile-bottomnav">
+  <a href="index.html" class="mobile-nav-item">🏠</a>
+  <a href="search.html" class="mobile-nav-item active">🔍</a>
+  <a href="create.html" class="mobile-nav-item">➕</a>
+  <a href="reels.html" class="mobile-nav-item">🎬</a>
+  <a href="profile.html" class="mobile-nav-item"><img src="https://i.pravatar.cc/40?img=3" style="width:26px;height:26px;border-radius:50%;object-fit:cover;" alt=""/></a>
+</nav>
+
+<script src="{% static 'myapp/js/script.js' %}"></script>
+</body>
+</html>

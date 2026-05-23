@@ -1,0 +1,152 @@
+{% load static %}
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chidiyaa — Edit Profile</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐦</text></svg>" />
+  <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'myapp/css/edit_pf.css' %}">
+</head>
+
+<body>
+  <div class="app-shell">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <a href="{% url 'index' %}" class="sidebar-brand">
+        <div class="sidebar-brand-icon">🐦</div><span class="sidebar-brand-name">Chidiyaa</span>
+      </a>
+      <nav class="sidebar-nav">
+        <a href="{% url 'index' %}" class="nav-link"><i class="ph ph-house nav-icon"></i><span>Home</span></a>
+        <a href="{% url 'search' %}" class="nav-link"><i class="ph ph-magnifying-glass nav-icon"></i><span>Search</span></a>
+        <a href="{% url 'search' %}" class="nav-link"><i class="ph ph-compass nav-icon"></i><span>Explore</span></a>
+        <a href="{% url 'reels' %}" class="nav-link"><i class="ph ph-video-camera nav-icon"></i><span>Reels</span></a>
+        <a href="{% url 'messages' %}" class="nav-link"><i class="ph ph-chat-circle nav-icon"></i><span>Messages</span><span
+            class="nav-badge">3</span></a>
+        <a href="{% url 'notifications' %}" class="nav-link"><span
+            class="nav-icon">🔔</span><span>Notifications</span><span class="nav-badge">9</span></a>
+        <a href="{% url 'create' %}" class="nav-link"><i class="ph ph-plus-circle nav-icon"></i><span>Create</span></a>
+        <a href="{% url 'profile' %}" class="nav-link active"><i class="ph ph-user nav-icon"></i><span>Profile</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-divider"></div>
+        <div class="dark-toggle-row"><i class="ph ph-moon nav-icon"></i><span>Dark Mode</span><span
+            class="toggle-pill"></span></div>
+        <a href="{% url 'login' %}" class="nav-link" style="color:var(--text-3)"><span
+            class="nav-icon">🚪</span><span>Logout</span></a>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="page-content">
+
+      <!-- Mobile Topbar -->
+      <header class="mobile-topbar">
+        <span class="mobile-brand">Edit Profile</span>
+      </header>
+
+      <div class="ep-page">
+
+        <!-- Heading -->
+        <div class="ep-header">
+          <a href="{% url 'profile' %}" class="ep-back">←</a>
+          <h1>Edit Profile</h1>
+        </div>
+
+        <!-- Form Card -->
+        <form action="{% url 'edit_profile' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="ep-card">
+
+            <!-- Avatar -->
+            <div class="ep-avatar-row">
+              <div class="ep-avatar-wrap">
+                <img class="ep-avatar-img" id="avatarPreview" src="{{ uid.profile_pic.url }}" alt="Profile Photo" />
+                <label for="avatarInput" class="ep-avatar-label" title="Change photo">✏️</label>
+                <input type="file" id="avatarInput" name="profile_pic" accept="image/*" style="display:none"
+                  onchange="document.getElementById('avatarPreview').src = URL.createObjectURL(this.files[0])" />
+              </div>
+              <div class="ep-avatar-info">
+                <strong>{{ uid.username }}</strong>
+                <span>Click the pencil to change your photo</span>
+                <label for="avatarInput" class="ep-change-btn">Change Photo</label>
+              </div>
+            </div>
+
+            <!-- Fields -->
+            <div class="ep-fields">
+
+              <div class="ep-field">
+                <label class="ep-label" for="ep-name">Full Name</label>
+                <input class="ep-input" type="text" id="ep-name" name="name" placeholder="Your full name"
+                  value="{{ uid.name }}" />
+              </div>
+
+              <div class="ep-field">
+                <label class="ep-label" for="ep-username">Username</label>
+                <input class="ep-input" type="text" id="ep-username" name="username" placeholder="username"
+                  value="{{ uid.username }}" />
+              </div>
+
+              <div class="ep-field">
+                <label class="ep-label" for="ep-bio">Bio</label>
+                <textarea class="ep-textarea" id="ep-bio" name="bio"
+                  placeholder="Write something about yourself…">{{ uid.bio }}</textarea>
+              </div>
+
+              <div class="ep-field">
+                <label class="ep-label" for="ep-desc">Description</label>
+                <textarea class="ep-textarea" id="ep-desc" name="description"
+                  placeholder="Tell people more about you…">{{ uid.description }}</textarea>
+              </div>
+
+              <div class="ep-field">
+                <label class="ep-label" for="ep-bio">Links</label>
+                <textarea class="ep-textarea" id="ep-bio" name="link"
+                  placeholder="Write something about yourself…">{{ uid.link }}</textarea>
+              </div>
+
+
+
+
+            </div><!-- /ep-fields -->
+
+            <!-- Update Button -->
+            <button type="submit" class="ep-submit">Update Profile</button>
+
+          </div><!-- /ep-card -->
+        </form>
+
+      </div><!-- /ep-page -->
+    </main>
+
+  </div><!-- /app-shell -->
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="mobile-bottomnav" style="display:flex">
+    <a href="{% url 'index' %}" class="mobile-nav-item">🏠</a>
+    <a href="{% url 'search' %}" class="mobile-nav-item">🔍</a>
+    <a href="{% url 'create' %}" class="mobile-nav-item">➕</a>
+    <a href="{% url 'reels' %}" class="mobile-nav-item">🎬</a>
+    <a href="{% url 'profile' %}" class="mobile-nav-item active">
+      <img src="{{ uid.profile_pic.url }}" style="width:26px;height:26px;border-radius:50%;object-fit:cover;" alt="" />
+    </a>
+  </nav>
+
+  <script>
+    // Dark mode toggle
+    const html = document.documentElement;
+    document.querySelector('.dark-toggle-row').addEventListener('click', () => {
+      const dark = html.dataset.theme !== 'dark';
+      html.setAttribute('data-theme', dark ? 'dark' : 'light');
+      localStorage.setItem('chidiyaaTheme', dark ? 'dark' : 'light');
+    });
+    if (localStorage.getItem('chidiyaaTheme') === 'dark') html.setAttribute('data-theme', 'dark');
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,527 @@
+/* =============================================
+   CHIDIYAA — Followers & Following Pages
+   Pure CSS interactions (no JS except dark mode)
+   Matches: Luxury Nude English ✦ Theme
+   ============================================= */
+
+/* ─────────────────────────────────────────────
+   PAGE WRAPPER
+───────────────────────────────────────────── */
+.follow-page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+/* ── Animated accent bar ── */
+.follow-accent-bar {
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-2) 0%, var(--accent) 50%, var(--accent-2) 100%);
+  background-size: 200% 100%;
+  animation: gradientShift 4s ease infinite;
+  border-radius: var(--r-full);
+  margin-bottom: 28px;
+  opacity: 0.7;
+}
+
+/* ─────────────────────────────────────────────
+   PAGE HEADER
+───────────────────────────────────────────── */
+.follow-page-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.follow-back-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--r-full);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  color: var(--text-1);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease),
+    transform var(--t-fast) var(--ease-back);
+  flex-shrink: 0;
+}
+
+.follow-back-btn:hover {
+  background: var(--surface-2);
+  border-color: var(--accent);
+  transform: translateX(-3px);
+}
+
+.follow-page-title-wrap {
+  flex: 1;
+}
+
+.follow-page-username {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+}
+
+.follow-page-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-1);
+  letter-spacing: var(--tracking-tight);
+}
+
+.follow-page-count {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-3);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-full);
+  padding: 4px 12px;
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────────
+   CSS-ONLY TABS
+   Two <a> links styled as tab pills.
+   Active tab is set via a class on the body
+   (e.g. body.tab-followers / body.tab-following)
+   which Django can set via template variable.
+───────────────────────────────────────────── */
+.follow-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 5px;
+  margin-bottom: 24px;
+}
+
+.follow-tab {
+  flex: 1;
+  padding: 10px 16px;
+  border-radius: var(--r-md);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-3);
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  transition:
+    background var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease),
+    box-shadow var(--t-fast) var(--ease);
+}
+
+.follow-tab:hover {
+  color: var(--text-2);
+  background: var(--surface-2);
+}
+
+.follow-tab.active {
+  background: var(--accent);
+  color: var(--text-inv);
+  box-shadow: var(--shadow-accent);
+}
+
+.tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--r-full);
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--surface-3);
+  color: var(--text-3);
+  margin-left: 7px;
+}
+
+.follow-tab.active .tab-count {
+  background: rgba(255, 255, 255, 0.22);
+  color: var(--text-inv);
+}
+
+/* ─────────────────────────────────────────────
+   SECTION LABEL
+───────────────────────────────────────────── */
+.follow-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-4);
+  padding: 0 4px 12px;
+}
+
+/* ─────────────────────────────────────────────
+   FOLLOW LIST
+───────────────────────────────────────────── */
+.follow-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.follow-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 16px;
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  border: 1px solid transparent;
+  transition:
+    background var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease),
+    transform var(--t-fast) var(--ease-back),
+    box-shadow var(--t-fast) var(--ease);
+  animation: followItemIn var(--t-enter) var(--ease-expo-out) both;
+}
+
+.follow-item:hover {
+  background: var(--surface-2);
+  border-color: var(--border-soft);
+  transform: translateX(4px);
+  box-shadow: var(--shadow-sm);
+}
+
+@keyframes followItemIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.follow-item:nth-child(1) {
+  animation-delay: .04s;
+}
+
+.follow-item:nth-child(2) {
+  animation-delay: .08s;
+}
+
+.follow-item:nth-child(3) {
+  animation-delay: .12s;
+}
+
+.follow-item:nth-child(4) {
+  animation-delay: .16s;
+}
+
+.follow-item:nth-child(5) {
+  animation-delay: .20s;
+}
+
+.follow-item:nth-child(6) {
+  animation-delay: .24s;
+}
+
+.follow-item:nth-child(7) {
+  animation-delay: .28s;
+}
+
+.follow-item:nth-child(8) {
+  animation-delay: .32s;
+}
+
+.follow-item:nth-child(9) {
+  animation-delay: .36s;
+}
+
+/* ─────────────────────────────────────────────
+   AVATAR
+───────────────────────────────────────────── */
+.follow-ava-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.follow-ava {
+  width: 50px;
+  height: 50px;
+  border-radius: var(--r-full);
+  overflow: hidden;
+  border: 2px solid var(--border);
+  transition: border-color var(--t-fast) var(--ease);
+}
+
+.follow-ava img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--t-base) var(--ease);
+}
+
+.follow-item:hover .follow-ava img {
+  transform: scale(1.08);
+}
+
+.follow-item:hover .follow-ava {
+  border-color: var(--accent);
+}
+
+/* Story ring */
+.follow-ava-wrap.has-story .follow-ava {
+  border: none;
+  padding: 2.5px;
+  background: var(--story-ring);
+}
+
+/* Online dot */
+.follow-online-dot {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: var(--r-full);
+  background: var(--success);
+  border: 2px solid var(--bg);
+  animation: onlinePulse 2.5s ease infinite;
+}
+
+/* ─────────────────────────────────────────────
+   USER INFO
+───────────────────────────────────────────── */
+.follow-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.follow-name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.follow-username {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.follow-verified {
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.follow-fullname {
+  font-size: 12.5px;
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.follow-mutual {
+  font-size: 11.5px;
+  color: var(--accent-2);
+  margin-top: 3px;
+}
+
+.follow-no-followback {
+  font-size: 11.5px;
+  color: var(--text-4);
+  margin-top: 3px;
+}
+
+/* ─────────────────────────────────────────────
+   ACTIONS
+───────────────────────────────────────────── */
+.follow-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Message button */
+.btn-msg {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-full);
+  background: var(--surface-2);
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease),
+    transform var(--t-fast) var(--ease-back);
+}
+
+.btn-msg:hover {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+  transform: scale(1.08);
+}
+
+/* ─────────────────────────────────────────────
+   CSS-ONLY FOLLOW TOGGLE
+   Uses the checkbox hack:
+     <input type="checkbox" id="f1" class="follow-cb">
+     <label for="f1" class="btn-follow-off">Follow</label>
+     <label for="f1" class="btn-follow-on">Following</label>
+
+   Unchecked → show .btn-follow-off, hide .btn-follow-on
+   Checked   → show .btn-follow-on,  hide .btn-follow-off
+───────────────────────────────────────────── */
+.follow-cb {
+  display: none;
+}
+
+.btn-follow-off,
+.btn-follow-on {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  border-radius: var(--r-full);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition:
+    background var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease),
+    transform var(--t-fast) var(--ease-back),
+    box-shadow var(--t-fast) var(--ease);
+}
+
+.btn-follow-off:active,
+.btn-follow-on:active {
+  transform: scale(0.93);
+}
+
+/* Unchecked = "Follow" → accent fill */
+.btn-follow-off {
+  background: var(--accent);
+  color: var(--text-inv);
+  border: 1.5px solid var(--accent);
+  box-shadow: var(--shadow-accent);
+}
+
+.btn-follow-off:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+/* "Follow Back" gold variant */
+.btn-follow-off.followback {
+  background: var(--accent-2);
+  border-color: var(--accent-2);
+  box-shadow: var(--shadow-gold);
+}
+
+.btn-follow-off.followback:hover {
+  background: #a8833f;
+  border-color: #a8833f;
+}
+
+/* Checked = "Following" → outlined */
+.btn-follow-on {
+  display: none;
+  background: transparent;
+  color: var(--text-1);
+  border: 1.5px solid var(--border);
+}
+
+.btn-follow-on:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+  background: rgba(212, 106, 106, 0.08);
+}
+
+/* The magic: when checkbox is checked, swap labels */
+.follow-cb:checked+.btn-follow-off {
+  display: none;
+}
+
+.follow-cb:checked+.btn-follow-off+.btn-follow-on {
+  display: inline-flex;
+}
+
+/* ── Remove button ── */
+.btn-remove {
+  padding: 8px 14px;
+  border-radius: var(--r-full);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-3);
+  border: 1.5px solid var(--border);
+  text-decoration: none;
+  transition:
+    background var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease),
+    transform var(--t-fast) var(--ease-back);
+}
+
+.btn-remove:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+  background: rgba(212, 106, 106, 0.08);
+  transform: scale(0.97);
+}
+
+/* -------------------- */
+.follow-search-wrap {
+  padding: 12px 16px 8px;
+}
+
+.follow-search-wrap input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: none;
+  background: var(--bg-2);
+  color: var(--text-1);
+  font-size: 14px;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+/* subtle premium effect */
+.follow-search-wrap input:focus {
+  background: var(--bg-3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
