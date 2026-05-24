@@ -192,7 +192,7 @@ http://127.0.0.1:8000/
 # Developer
 
 Jeel Tank
-Python Full Stack Developer
+Python Developer
 
 ---
 
