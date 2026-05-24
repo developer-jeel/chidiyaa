@@ -31,12 +31,12 @@ def login(request):
         try:
             uid = InstaUser.objects.get(email = email)
             if not check_password(password,uid.password): 
-                print('===========1', email)  
                 return render(request, "myapp/login.html")
             else:
                 request.session['email'] = email
                 context = {'uid' : uid}
-                print('===========2', context)
+                uid.is_active = True
+                uid.save()
                 return redirect('index') 
         except:
             print('===========3', password)
@@ -124,6 +124,9 @@ def register(request):
 
 @check_login
 def logout(request):
+    uid = request.uid
+    uid.is_active = False
+    uid.save()
     del request.session['email']
     return redirect("login")
             

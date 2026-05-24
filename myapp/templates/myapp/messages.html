@@ -96,7 +96,11 @@
             </div>
             <div class="chat-topbar-info">
               <div class="chat-topbar-name">{{ chat_user.name }}</div>
+              {% if chat_user.is_active  %}
               <div class="chat-topbar-status">Active now</div>
+              {%else%}
+              <div class="chat-topbar-status">Offline</div>
+              {%endif%}
             </div>
             <div class="chat-topbar-actions">
               <button title="Voice call">📞</button>
