@@ -68,7 +68,8 @@ def send_email(email, name, otp,user):
 @check_login
 def index(request):
     uid = request.uid
-    post_all = InstaPost.objects.all().order_by('-created_at')
+    # post_all = InstaPost.objects.all().order_by('-created_at')
+    post_all = InstaPost.objects.exclude(user = uid).order_by('-created_at')
     users = InstaUser.objects.exclude(username = uid.username)
     my_following = FollowUsers.objects.filter(Following = uid ).values_list("Following_person_id",flat=True)
     context = {'uid' : uid,'post_all' : post_all,'users' :  users,'my_following' : my_following}
@@ -275,8 +276,17 @@ def followers(request):
     context = {'uid' : uid , 'followers':followers , 'my_following' : my_following}
     return render(request,"myapp/Followers.html",context)
 
+@check_login
 def search(request):
-    return render(request, "myapp/search.html")
+    uid = request.uid
+    all_posts = InstaPost.objects.exclude(user = uid)
+    all_reels = instrareels.objects.exclude(user = uid)
+    reel_post = list(all_posts) + list(all_reels)
+    random.shuffle(reel_post)
+    all_comments = comments.objects.exclude(user_fk = uid)
+    context = {'uid':uid, 'all_posts' : reel_post,'all_comments' : all_comments}
+    return render(request, "myapp/search.html",context)
+
 @check_login
 def reels(request):
     uid = request.uid

@@ -55,76 +55,53 @@
       <!-- Explore Grid (mosaic layout) -->
       <div class="search-grid">
         <!-- Row 1 -->
+         {% for post in all_posts%}
         <div class="search-grid-item tall">
-          <img src="https://picsum.photos/seed/ex1/400/800" alt="" loading="lazy"/>
+          {%if post.image%}
+          <img src="{{post.image.url}}" alt="" loading="lazy"/>
+          {%else%}
+          <!-- <video src="{{ post.video.url }}" autoplay loop muted alt="" loading="lazy"></video> -->
+          {%endif%}
           <div class="grid-post-overlay"><span>❤️ 22.1K</span><span>💬 874</span></div>
         </div>
-        <div class="search-grid-item">
-          <img src="https://picsum.photos/seed/ex2/400/400" alt="" loading="lazy"/>
-          <div class="grid-post-overlay"><span>❤️ 8.4K</span></div>
+        <div class="modal-backdrop" id="post-view-modal">
+        <div class="modal-card post-view-card">
+          <div class="post-view-body">
+            <div class="post-view-img"><img src="" alt="Post" /></div>
+            <div class="post-view-right">
+              <div class="modal-header">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <div style="width:32px;height:32px;border-radius:50%;overflow:hidden;"><img src="https://i.pravatar.cc/150?img=1" style="width:100%;height:100%;object-fit:cover;" alt=""/></div>
+                  <strong>{{post.user.username}}</strong>
+                </div>
+                <span class="modal-close" data-close-modal="post-view-modal">✕</span>
+              </div>
+{% for comment in post.commented_post.all %}
+
+<div class="post-view-comments-list">
+
+    <div class="comment-item">
+
+        <div class="comment-item-ava">
+            <img src="https://i.pravatar.cc/150?img=5" alt=""/>
         </div>
-        <div class="search-grid-item">
-          <img src="https://picsum.photos/seed/ex3/400/400" alt="" loading="lazy"/>
-          <div class="grid-post-overlay"><span>❤️ 3.9K</span></div>
+
+        <div>
+            <div class="comment-item-body">
+                <strong>{{ comment.user_fk.username }}</strong>
+                {{ comment.comment }}
+            </div>
+
+            <div class="comment-item-time">
+                {{ comment.created_at }}
+            </div>
         </div>
-        <div class="search-grid-item">
-          <img src="https://picsum.photos/seed/ex4/400/400" alt="" loading="lazy"/>
-          <div class="grid-post-overlay"><span>❤️ 11.2K</span></div>
-        </div>
-        <div class="search-grid-item">
-          <img src="https://picsum.photos/seed/ex5/400/400" alt="" loading="lazy"/>
-          <div class="grid-post-overlay"><span>❤️ 5.7K</span></div>
-        </div>
-        <!-- Row 2 -->
-        <div class="search-grid-item">
-          <img src="https://picsum.photos/seed/ex6/400/400" alt="" loading="lazy"/>
-          <div class="grid-post-overlay"><span>❤️ 14.3K</span></div>
-        </div>
-        <div class="search-grid-item tall">
-          <img src="https://picsum.photos/seed/ex7/400/800" alt="" loading="lazy"/>
-          <div class="grid-post-overlay"><span>❤️ 31K</span><span>💬 1.2K</span></div>
-        </div>
-        <div class="search-grid-item">
-          <img src="https://picsum.photos/seed/ex8/400/400" alt="" loading="lazy"/>
-          <div class="grid-post-overlay"><span>❤️ 6.1K</span></div>
-        </div>
-        <div class="search-grid-item">
-          <img src="https://picsum.photos/seed/ex9/400/400" alt="" loading="lazy"/>
-          <div class="grid-post-overlay"><span>❤️ 9.8K</span></div>
-        </div>
-        <div class="search-grid-item">
-          <img src="https://picsum.photos/seed/ex10/400/400" alt="" loading="lazy"/>
-          <div class="grid-post-overlay"><span>❤️ 4.2K</span></div>
-        </div>
-        <div class="search-grid-item">
-          <img src="https://picsum.photos/seed/ex11/400/400" alt="" loading="lazy"/>
-          <div class="grid-post-overlay"><span>❤️ 7.5K</span></div>
-        </div>
-        <div class="search-grid-item">
-          <img src="https://picsum.photos/seed/ex12/400/400" alt="" loading="lazy"/>
-          <div class="grid-post-overlay"><span>❤️ 2.8K</span></div>
-        </div>
-      </div>
+
     </div>
-  </main>
+
 </div>
 
-<!-- Post view modal -->
-<div class="modal-backdrop" id="post-view-modal">
-  <div class="modal-card post-view-card">
-    <div class="post-view-body">
-      <div class="post-view-img"><img src="" alt="Post" /></div>
-      <div class="post-view-right">
-        <div class="modal-header">
-          <div style="display:flex;align-items:center;gap:10px;">
-            <div style="width:32px;height:32px;border-radius:50%;overflow:hidden;"><img src="https://i.pravatar.cc/150?img=1" style="width:100%;height:100%;object-fit:cover;" alt=""/></div>
-            <strong>aarav_k</strong>
-          </div>
-          <span class="modal-close" data-close-modal="post-view-modal">✕</span>
-        </div>
-        <div class="post-view-comments-list">
-          <div class="comment-item"><div class="comment-item-ava"><img src="https://i.pravatar.cc/150?img=5" alt=""/></div><div><div class="comment-item-body"><strong>priya.s</strong> Wow this is stunning 🔥</div><div class="comment-item-time">1h · <span class="comment-item-reply">Reply</span></div></div></div>
-        </div>
+{% endfor %}
         <div style="border-top:1px solid var(--border);">
           <div class="post-actions" style="padding:10px 12px 6px">
             <div class="left"><button class="action-btn like-btn">🤍</button><button class="action-btn">💬</button><button class="action-btn">📤</button></div>
@@ -136,6 +113,14 @@
     </div>
   </div>
 </div>
+        {%endfor%}
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Post view modal -->
+
 
 <nav class="mobile-bottomnav">
   <a href="index.html" class="mobile-nav-item">🏠</a>
