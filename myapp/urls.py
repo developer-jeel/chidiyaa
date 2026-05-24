@@ -25,6 +25,7 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('reels/', views.reels, name='reels'),
     path('messages/', views.messages, name='messages'),
+    path('messages/<int:pk>/', views.messages, name='messages_chat'),
     path('notifications/', views.notifications, name='notifications'),
     path('create/', views.create, name='create'),
     path('profile/', views.profile, name='profile'),

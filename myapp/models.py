@@ -21,6 +21,7 @@ class InstaUser(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     otp = models.IntegerField(blank=True, null=True,default=1234)
+    is_active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.username

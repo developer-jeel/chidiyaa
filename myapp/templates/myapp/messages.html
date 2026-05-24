@@ -48,98 +48,54 @@
       <!-- Conversation List -->
       <div class="msg-list-panel">
         <div class="msg-panel-header">
-          <h2>meera_j <button title="New message">✏️</button></h2>
+          <h2>{{uid.name}} <button title="New message">✏️</button></h2>
           <input class="msg-search" type="text" placeholder="🔍 Search messages…" />
         </div>
         <div class="msg-list-scroll">
           <!-- active conversation -->
-          <div class="msg-item">
+           {% for user in users %}
+          <div class="msg-item" onclick="window.location.href='{% url 'messages_chat' user.id %}'" style="cursor:pointer; {% if chat_user and chat_user.id == user.id %}background:var(--bg-2);{% endif %}">
             <div class="msg-item-avatar">
-              <img src="https://i.pravatar.cc/150?img=5" alt="priya.s" />
+              {% if user.profile_pic %}
+              <img src="{{ user.profile_pic.url }}" alt="{{user.name}}" />
+              {% else %}
+              <img src="{% static 'myapp/images/boy.png' %}" alt="{{user.name}}" />
+              {% endif %}
               <div class="online-dot"></div>
             </div>
             <div class="msg-item-info">
-              <div class="msg-item-name">priya.s</div>
-              <div class="msg-item-preview unread">Sent you a reel 🎬</div>
-            </div>
-            <div class="msg-item-meta">
-              <span class="msg-item-time">2m</span>
-              <div class="unread-dot"></div>
+              <div class="msg-item-name">{{user.name}}</div>
+              <div class="msg-item-preview unread">Tap to chat</div>
             </div>
           </div>
-          <div class="msg-item">
-            <div class="msg-item-avatar"><img src="https://i.pravatar.cc/150?img=8" alt="rohit_m" /></div>
-            <div class="msg-item-info">
-              <div class="msg-item-name">rohit_m</div>
-              <div class="msg-item-preview unread">Bhai trip plan karte hain! 🏔️</div>
-            </div>
-            <div class="msg-item-meta">
-              <span class="msg-item-time">1h</span>
-              <div class="unread-dot"></div>
-            </div>
-          </div>
-          <div class="msg-item">
-            <div class="msg-item-avatar">
-              <img src="https://i.pravatar.cc/150?img=1" alt="aarav_k" />
-              <div class="online-dot"></div>
-            </div>
-            <div class="msg-item-info">
-              <div class="msg-item-name">aarav_k</div>
-              <div class="msg-item-preview">That photo was absolutely 🔥</div>
-            </div>
-            <div class="msg-item-meta"><span class="msg-item-time">3h</span></div>
-          </div>
-          <div class="msg-item">
-            <div class="msg-item-avatar"><img src="https://i.pravatar.cc/150?img=9" alt="sneha.d" /></div>
-            <div class="msg-item-info">
-              <div class="msg-item-name">sneha.d</div>
-              <div class="msg-item-preview">You: Weekend plans? 🏖️</div>
-            </div>
-            <div class="msg-item-meta"><span class="msg-item-time">Yesterday</span></div>
-          </div>
-          <div class="msg-item">
-            <div class="msg-item-avatar"><img src="https://i.pravatar.cc/150?img=12" alt="dev.p" /></div>
-            <div class="msg-item-info">
-              <div class="msg-item-name">dev.p</div>
-              <div class="msg-item-preview">Liked your photo ❤️</div>
-            </div>
-            <div class="msg-item-meta"><span class="msg-item-time">2 days</span></div>
-          </div>
-          <div class="msg-item">
-            <div class="msg-item-avatar"><img src="https://i.pravatar.cc/150?img=20" alt="nikhil.v" /></div>
-            <div class="msg-item-info">
-              <div class="msg-item-name">nikhil.v</div>
-              <div class="msg-item-preview">See you at the event!</div>
-            </div>
-            <div class="msg-item-meta"><span class="msg-item-time">3 days</span></div>
-          </div>
-          <div class="msg-item">
-            <div class="msg-item-avatar"><img src="https://i.pravatar.cc/150?img=22" alt="aisha.m" /></div>
-            <div class="msg-item-info">
-              <div class="msg-item-name">aisha.m</div>
-              <div class="msg-item-preview">Welcome to Chidiyaa! 🐦</div>
-            </div>
-            <div class="msg-item-meta"><span class="msg-item-time">1 week</span></div>
-          </div>
+          {%endfor%}
+          
         </div>
       </div>
 
       <!-- Chat Panel -->
       <div class="chat-panel">
+        {% if not chat_user %}
         <!-- Empty state -->
         <div class="chat-empty" id="chat-empty">
           <div class="chat-empty-icon">💬</div>
           <h3>Your Messages</h3>
-          <p>Send private photos and messages to friends</p>
-          <button class="chat-empty-btn" onclick="document.querySelector('.msg-item').click()">Send Message</button>
+          <p>Send private messages to friends</p>
         </div>
-        <!-- Conversation (hidden until selected) -->
-        <div id="chat-convo" style="display:none;flex:1;flex-direction:column;">
+        {% else %}
+        <!-- Conversation -->
+        <div id="chat-convo" style="display:flex;flex:1;flex-direction:column;">
           <div class="chat-topbar">
-            <button class="chat-back-btn" style="font-size:22px;margin-right:8px;color:var(--text-1);">←</button>
-            <div class="chat-topbar-avatar"><img src="https://i.pravatar.cc/150?img=5" alt="" /></div>
+            <a href="{% url 'messages' %}" class="chat-back-btn" style="font-size:22px;margin-right:8px;color:var(--text-1);text-decoration:none;">←</a>
+            <div class="chat-topbar-avatar">
+              {% if chat_user.profile_pic %}
+              <img src="{{ chat_user.profile_pic.url }}" alt="" />
+              {% else %}
+              <img src="{% static 'myapp/images/boy.png' %}" alt="" />
+              {% endif %}
+            </div>
             <div class="chat-topbar-info">
-              <div class="chat-topbar-name">priya.s</div>
+              <div class="chat-topbar-name">{{ chat_user.name }}</div>
               <div class="chat-topbar-status">Active now</div>
             </div>
             <div class="chat-topbar-actions">
@@ -148,34 +104,58 @@
               <button title="Info">ℹ️</button>
             </div>
           </div>
-          <div class="chat-messages">
-            <div class="chat-date-sep">Yesterday</div>
-            <div class="chat-bubble-wrap received">
-              <div class="bubble-avatar"><img src="https://i.pravatar.cc/150?img=5" alt=""/></div>
-              <div class="chat-bubble">Hey Meera! Saw your latest post 😍 The lighting is incredible!</div>
-            </div>
-            <div class="chat-bubble-wrap sent">
-              <div class="chat-bubble">Thank you yaar!! 🙏 Finally got the golden hour right haha</div>
-            </div>
-            <div class="chat-bubble-wrap received">
-              <div class="bubble-avatar"><img src="https://i.pravatar.cc/150?img=5" alt=""/></div>
-              <div class="chat-bubble">What camera are you using these days? I need to upgrade mine 📸</div>
-            </div>
-            <div class="chat-bubble-wrap sent">
-              <div class="chat-bubble">Sony A7 IV! Total game changer. The autofocus alone 🤩</div>
-            </div>
-            <div class="chat-date-sep">Today</div>
-            <div class="chat-bubble-wrap received">
-              <div class="bubble-avatar"><img src="https://i.pravatar.cc/150?img=5" alt=""/></div>
-              <div class="chat-bubble">Sent you a reel 🎬</div>
-            </div>
+          <div class="chat-messages" style="flex:1; overflow-y:auto; display:flex; flex-direction:column;">
+            {% for msg in chat_messages %}
+            {% if msg.chat_room.user == uid %}
+              {% if msg.role == 'sender' %}
+              <div class="chat-bubble-wrap sent">
+                <div class="chat-bubble">{{ msg.content }}</div>
+              </div>
+              {% else %}
+              <div class="chat-bubble-wrap received">
+                <div class="bubble-avatar">
+                   {% if chat_user.profile_pic %}
+                   <img src="{{ chat_user.profile_pic.url }}" alt=""/>
+                   {% else %}
+                   <img src="{% static 'myapp/images/boy.png' %}" alt=""/>
+                   {% endif %}
+                </div>
+                <div class="chat-bubble">{{ msg.content }}</div>
+              </div>
+              {% endif %}
+            {% else %}
+              {% if msg.role == 'receiver' %}
+              <div class="chat-bubble-wrap sent">
+                <div class="chat-bubble">{{ msg.content }}</div>
+              </div>
+              {% else %}
+              <div class="chat-bubble-wrap received">
+                <div class="bubble-avatar">
+                   {% if chat_user.profile_pic %}
+                   <img src="{{ chat_user.profile_pic.url }}" alt=""/>
+                   {% else %}
+                   <img src="{% static 'myapp/images/boy.png' %}" alt=""/>
+                   {% endif %}
+                </div>
+                <div class="chat-bubble">{{ msg.content }}</div>
+              </div>
+              {% endif %}
+            {% endif %}
+            {% endfor %}
           </div>
-          <div class="chat-input-bar">
+          <script>
+            var msgArea = document.querySelector('.chat-messages');
+            if (msgArea) msgArea.scrollTop = msgArea.scrollHeight;
+          </script>
+          <form class="chat-input-bar" method="POST" action="">
+            {% csrf_token %}
             <span class="chat-emoji-btn">😊</span>
-            <input class="chat-text-input" type="text" placeholder="Message…" />
-            <button class="chat-send-btn">Send 🐦</button>
-          </div>
+            <input class="chat-text-input" type="text" placeholder="Message…" required style="flex:1;border:none;outline:none;background:transparent;padding:0 10px;color:var(--text-1);" oninput="document.getElementById('hidden-content').value = this.value" />
+            <input type="hidden" name="content" id="hidden-content" />
+            <button type="submit" style="border:none;background:none;color:var(--accent);font-weight:bold;cursor:pointer;">Send 🐦</button>
+          </form>
         </div>
+        {% endif %}
       </div>
 
     </div>

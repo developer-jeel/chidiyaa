@@ -282,11 +282,45 @@ def reels(request):
     return render(request, "myapp/reels.html",context)
 
 @check_login
-def messages(request):
+def messages(request, pk=None):
     uid = request.uid
-    if request.POST:
-        pass
-    return render(request, "myapp/messages.html")
+    my_following = FollowUsers.objects.filter(Following=uid)
+    users = [f.Following_person for f in my_following]
+
+    chat_user = None
+    chat_room_obj = None
+    chat_messages = []
+
+    if pk:
+        chat_user = InstaUser.objects.get(id=pk)
+        chat_room_obj = chatroom.objects.filter(user=uid, user2=chat_user).first()
+        if not chat_room_obj:
+            chat_room_obj = chatroom.objects.filter(user=chat_user, user2=uid).first()
+        
+        if not chat_room_obj:
+            chat_room_obj = chatroom.objects.create(user=uid, user2=chat_user)
+
+        if request.POST:
+            content = request.POST.get('content')
+            if content:
+                role = 'sender' if uid == chat_room_obj.user else 'receiver'
+                message.objects.create(
+                    chat_room=chat_room_obj,
+                    role=role,
+                    content=content
+                )
+                return redirect('messages_chat', pk=pk)
+
+        chat_messages = message.objects.filter(chat_room=chat_room_obj).order_by('created_at')
+
+    context = {
+        'uid': uid,
+        'users': users,
+        'chat_user': chat_user,
+        'chat_messages': chat_messages,
+        'chat_room': chat_room_obj,
+    }
+    return render(request, "myapp/messages.html", context)
 
 @check_login
 def notifications(request):
@@ -453,5 +487,4 @@ def user_followers(request,pk):
     my_following = FollowUsers.objects.filter(Following = uid ).values_list("Following_person_id",flat=True)
     context = {'profile_user' : profile_user,'followers' : followers,'my_following':my_following}
     return render(request,"myapp/user_followers.html",context)
-
 
