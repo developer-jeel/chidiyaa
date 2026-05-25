@@ -431,6 +431,16 @@ function initSearch() {
       this.classList.add('active');
     });
   });
+
+  // Play/pause reels videos on hover in search grid
+  document.querySelectorAll('.search-grid-item video').forEach(video => {
+    video.addEventListener('mouseenter', () => {
+      video.play().catch(e => {});
+    });
+    video.addEventListener('mouseleave', () => {
+      video.pause();
+    });
+  });
 }
 
 /* ─────────────────────────────────────────────

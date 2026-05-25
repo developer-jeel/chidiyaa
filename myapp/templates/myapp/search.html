@@ -58,68 +58,116 @@
         <button class="chip-btn">Tags #</button>
       </div>
 
-      <!-- Explore Grid (mosaic layout) -->
+      <!-- Explore Grid (asymmetrical Instagram layout) -->
       <div class="search-grid">
-        <!-- Row 1 -->
-         {% for post in all_posts%}
-        <div class="search-grid-item tall">
-          {%if post.image%}
-          <img src="{{post.image.url}}" alt="" loading="lazy"/>
-          {%else%}
-          <!-- <video src="{{ post.video.url }}" autoplay loop muted alt="" loading="lazy"></video> -->
-          {%endif%}
-          <div class="grid-post-overlay"><span>❤️ 22.1K</span><span>💬 874</span></div>
-        </div>
-        <div class="modal-backdrop" id="post-view-modal">
-        <div class="modal-card post-view-card">
-          <div class="post-view-body">
-            <div class="post-view-img"><img src="" alt="Post" /></div>
-            <div class="post-view-right">
-              <div class="modal-header">
-                <div style="display:flex;align-items:center;gap:10px;">
-                  <div style="width:32px;height:32px;border-radius:50%;overflow:hidden;"><img src="https://i.pravatar.cc/150?img=1" style="width:100%;height:100%;object-fit:cover;" alt=""/></div>
-                  <strong>{{post.user.username}}</strong>
-                </div>
-                <span class="modal-close" data-close-modal="post-view-modal">✕</span>
-              </div>
-{% for comment in post.commented_post.all %}
-
-<div class="post-view-comments-list">
-
-    <div class="comment-item">
-
-        <div class="comment-item-ava">
-            <img src="{{ comment.user_fk.profile_pic.url }}" alt=""/>
-        </div>
-
-        <div>
-            <div class="comment-item-body">
-                <strong>{{ comment.user_fk.username }}</strong>
-                {{ comment.comment }}
-            </div>
-
-            <div class="comment-item-time">
-                {{ comment.created_at }}
-            </div>
-        </div>
-
-    </div>
-
-</div>
-
-{% endfor %}
-        <div style="border-top:1px solid var(--border);">
-          <div class="post-actions" style="padding:10px 12px 6px">
-            <div class="left"><button class="action-btn like-btn">🤍</button><button class="action-btn">💬</button><button class="action-btn">📤</button></div>
-            <button class="action-btn save-btn">🏷️</button>
-          </div>
-          <div class="post-add-comment"><div class="comment-avatar-sm"><img src="https://i.pravatar.cc/150?img=3" alt=""/></div><input class="comment-input-field" type="text" placeholder="Add a comment…"/><button class="comment-post-btn">Post</button></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-        {%endfor%}
+         {% for post in all_posts %}
+         <!-- Determine if it is a Reel or Photo -->
+         {% if post.image %}
+         <!-- Photo Post (1x1 square) -->
+         <div class="search-grid-item photo-item" data-open-modal="post-view-modal-post-{{post.id}}">
+           <img src="{{post.image.url}}" alt="Post" loading="lazy"/>
+           <div class="grid-item-badge"><i class="ph ph-image"></i></div>
+           <div class="grid-post-overlay">
+             <span>❤️ {% if post.like_post.count %}{{ post.like_post.count }}{% else %}2.1K{% endif %}</span>
+             <span>💬 {% if post.commented_post.count %}{{ post.commented_post.count }}{% else %}42{% endif %}</span>
+           </div>
+         </div>
+         {% else %}
+         <!-- Reel Post (1x2 tall vertical) -->
+         <div class="search-grid-item tall reel-item" data-open-modal="post-view-modal-reel-{{post.id}}">
+           <video src="{{post.video.url}}" loop muted playsinline loading="lazy"></video>
+           <div class="grid-item-badge"><i class="ph ph-video-camera"></i></div>
+           <div class="grid-post-overlay">
+             <span>❤️ {% if post.like_reel.count %}{{ post.like_reel.count }}{% else %}8.4K{% endif %}</span>
+             <span>💬 {% if post.commented_reel.count %}{{ post.commented_reel.count }}{% else %}156{% endif %}</span>
+           </div>
+         </div>
+         {% endif %}
+         
+         <!-- Modal for this specific item -->
+         <div class="modal-backdrop" id="{% if post.image %}post-view-modal-post-{{post.id}}{% else %}post-view-modal-reel-{{post.id}}{% endif %}">
+           <div class="modal-card post-view-card">
+             <div class="post-view-body">
+               <div class="post-view-img">
+                 {% if post.image %}
+                 <img src="{{ post.image.url }}" alt="Post" />
+                 {% else %}
+                 <video src="{{ post.video.url }}" controls autoplay loop muted playsinline></video>
+                 {% endif %}
+               </div>
+               <div class="post-view-right">
+                 <div class="modal-header">
+                   <div style="display:flex;align-items:center;gap:10px;">
+                     <div style="width:32px;height:32px;border-radius:50%;overflow:hidden;">
+                       <img src="{{ post.user.profile_pic.url }}" style="width:100%;height:100%;object-fit:cover;" alt=""/>
+                     </div>
+                     <strong>{{ post.user.username }}</strong>
+                   </div>
+                   <span class="modal-close" data-close-modal="{% if post.image %}post-view-modal-post-{{post.id}}{% else %}post-view-modal-reel-{{post.id}}{% endif %}">✕</span>
+                 </div>
+                 
+                 <div class="post-view-comments-list">
+                   <!-- Caption as first comment -->
+                   <div class="comment-item">
+                     <div class="comment-item-ava">
+                       <img src="{{ post.user.profile_pic.url }}" alt=""/>
+                     </div>
+                     <div>
+                       <div class="comment-item-body">
+                         <strong>{{ post.user.username }}</strong> {{ post.caption }}
+                       </div>
+                       <div class="comment-item-time">{{ post.whenpublished }}</div>
+                     </div>
+                   </div>
+                   
+                   {% for comment in post.commented_post.all %}
+                   <div class="comment-item">
+                     <div class="comment-item-ava">
+                       <img src="{{ comment.user_fk.profile_pic.url }}" alt=""/>
+                     </div>
+                     <div>
+                       <div class="comment-item-body">
+                         <strong>{{ comment.user_fk.username }}</strong> {{ comment.comment }}
+                       </div>
+                       <div class="comment-item-time">{{ comment.created_at }}</div>
+                     </div>
+                   </div>
+                   {% empty %}
+                   <div class="no-comments-msg">No comments yet. Be the first to share your thoughts!</div>
+                   {% endfor %}
+                 </div>
+                 
+                 <div style="border-top:1px solid var(--border);">
+                   <div class="post-actions" style="padding:10px 12px 6px">
+                     <div class="left">
+                       <a href="{% url 'post_like' pk=post.id %}" class="action-btn like-btn">🤍</a>
+                       <button class="action-btn">💬</button>
+                       <button class="action-btn">📤</button>
+                     </div>
+                     <button class="action-btn save-btn">🏷️</button>
+                   </div>
+                   <div class="post-likes" style="padding:0 14px 6px">
+                     <span class="likes-count">
+                       {% if post.image %}{{ post.like_post.count }}{% else %}{{ post.like_reel.count }}{% endif %}
+                     </span> likes
+                   </div>
+                   
+                   <div class="post-add-comment">
+                     <form method="POST" action="{% url 'post_comment' post.id %}" style="display:flex; width:100%; align-items:center; gap:8px;">
+                       {% csrf_token %}
+                       <div class="comment-avatar-sm">
+                         <img src="{{ uid.profile_pic.url }}" alt=""/>
+                       </div>
+                       <input class="comment-input-field" type="text" placeholder="Add a comment…" name="comment" required />
+                       <button type="submit" class="comment-post-btn">Post</button>
+                     </form>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+         {% endfor %}
       </div>
     </div>
   </main>
