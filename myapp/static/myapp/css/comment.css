@@ -1,11 +1,11 @@
 :root {
-    --accent: #0095f6;
-    --bg-1: #ffffff;
-    --bg-2: #fafafa;
-    --border: #dbdbdb;
-    --text-primary: #1a1a1a;
-    --text-secondary: #737373;
-    --text-tertiary: #aaaaaa;
+    --accent: var(--accent);
+    --bg-1: var(--surface);
+    --bg-2: var(--surface-2);
+    --border: var(--border);
+    --text-primary: var(--text-1);
+    --text-secondary: var(--text-2);
+    --text-tertiary: var(--text-3);
 }
 
 /* --- Keyframes --- */

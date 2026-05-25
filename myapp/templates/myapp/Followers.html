@@ -2,6 +2,12 @@
 <html lang="en" data-theme="light">
 
 <head>
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('chidiyaa-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chidiyaa — Followers</title>
@@ -138,17 +144,9 @@
     </a>
   </nav>
 
-  <!-- Dark mode only JS (matches all other Chidiyaa pages) -->
+  <!-- GSAP and global script.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="{% static 'myapp/js/script.js' %}"></script>
-  <script>
-    const html = document.documentElement;
-    document.querySelector('.dark-toggle-row').addEventListener('click', () => {
-      const dark = html.dataset.theme !== 'dark';
-      html.setAttribute('data-theme', dark ? 'dark' : 'light');
-      localStorage.setItem('chidiyaaTheme', dark ? 'dark' : 'light');
-    });
-    if (localStorage.getItem('chidiyaaTheme') === 'dark') html.setAttribute('data-theme', 'dark');
-  </script>
 
 </body>
 

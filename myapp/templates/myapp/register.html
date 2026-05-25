@@ -2,11 +2,18 @@
 <html lang="en" data-theme="light">
 
 <head>
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('chidiyaa-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create Account - Chidiyaa</title>
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐦</text></svg>" />
+  <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}">
   <link rel="stylesheet" href="{% static 'myapp/css/register.css' %}">
 </head>
 
@@ -74,21 +81,21 @@
 
           <!-- Full Name + Username -->
           <div class="row">
-            <div class="form-group">
-              <label for="full_name">Full Name</label>
-              <input type="text" id="full_name" name="full_name" placeholder="Meera Joshi" required
-                autocomplete="name" />
+            <div class="form-group floating-label-group">
+              <input type="text" id="full_name" name="full_name" placeholder=" " required
+                autocomplete="name" class="field-input" />
+              <label class="field-label" for="full_name">Full Name</label>
             </div>
-            <div class="form-group">
-              <label for="username">Username</label>
-              <input type="text" id="username" name="username" placeholder="meera_j" required autocomplete="username" />
+            <div class="form-group floating-label-group">
+              <input type="text" id="username" name="username" placeholder=" " required autocomplete="username" class="field-input" />
+              <label class="field-label" for="username">Username</label>
             </div>
           </div>
 
           <!-- Email -->
-          <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="meera@email.com" required autocomplete="email" />
+          <div class="form-group floating-label-group">
+            <input type="email" id="email" name="email" placeholder=" " required autocomplete="email" class="field-input" />
+            <label class="field-label" for="email">Email Address</label>
           </div>
 
           <!-- Gender -->
@@ -108,15 +115,15 @@
 
           <!-- Password + Confirm -->
           <div class="row">
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" id="password" name="password" placeholder="••••••••" required
-                autocomplete="new-password" />
+            <div class="form-group floating-label-group">
+              <input type="password" id="password" name="password" placeholder=" " required
+                autocomplete="new-password" class="field-input" />
+              <label class="field-label" for="password">Password</label>
             </div>
-            <div class="form-group">
-              <label for="confirm_password">Confirm Password</label>
-              <input type="password" id="confirm_password" name="confirm_password" placeholder="••••••••" required
-                autocomplete="new-password" />
+            <div class="form-group floating-label-group">
+              <input type="password" id="confirm_password" name="confirm_password" placeholder=" " required
+                autocomplete="new-password" class="field-input" />
+              <label class="field-label" for="confirm_password">Confirm Password</label>
             </div>
           </div>
 
@@ -149,11 +156,8 @@
   </div>
   <!-- /register-container -->
 
-  <script>
-    const saved = localStorage.getItem('chidiyaaTheme');
-    if (saved) document.documentElement.setAttribute('data-theme', saved);
-  </script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="{% static 'myapp/js/script.js' %}"></script>
 </body>
 
 </html>

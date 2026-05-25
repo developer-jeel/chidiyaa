@@ -2,6 +2,12 @@
 <html lang="en" data-theme="light">
 
 <head>
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('chidiyaa-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chidiyaa — Log in</title>
@@ -47,22 +53,29 @@
 
           <form action="{% url 'login' %}" method="post">
             {% csrf_token %}
-            <div class="field-group">
-              <label class="field-label" for="email">Email</label>
-              <input class="field-input" id="email" type="text" placeholder="your@email.com" required
+            <div class="field-group floating-label-group">
+              <input class="field-input" id="email" type="text" placeholder=" " required
                 autocomplete="username" name="email" />
+              <label class="field-label" for="email">Email Address</label>
             </div>
-            <div class="field-group">
-              <label class="field-label" for="password">Password</label>
-              <input class="field-input" id="password" type="password" placeholder="••••••••" required
+            <div class="field-group floating-label-group">
+              <input class="field-input" id="password" type="password" placeholder=" " required
                 autocomplete="current-password" name="password" />
+              <label class="field-label" for="password">Password</label>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+              <label class="custom-checkbox">
+                <input type="checkbox" name="remember" checked>
+                <span class="checkbox-box"></span>
+                <span>Remember me</span>
+              </label>
+              <a href="{% url 'forgot_password' %}" class="auth-forgot" style="margin: 0; font-size: 13.5px;">Forgot password?</a>
             </div>
 
             <input class="btn-auth" type="submit" value="Login">
 
           </form>
-
-          <a href="{% url 'forgot_password' %}" class="auth-forgot">Forgot password?</a>
         </div>
 
         <div class="auth-footer-card">
@@ -94,6 +107,7 @@
   <button class="theme-toggle-btn" title="Toggle dark mode"
     style="position:fixed;bottom:24px;right:24px;width:46px;height:46px;border-radius:50%;background:var(--surface);border:1.5px solid var(--border);font-size:20px;cursor:pointer;box-shadow:var(--shadow-md);transition:all .2s;">🌙</button>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="{% static 'myapp/js/script.js' %}"></script>
 </body>
 

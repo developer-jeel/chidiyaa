@@ -16,14 +16,14 @@
 
 /* ── Root tokens ────────────────────────────────────────────── */
 :root {
-  --reel-bg: #2A2220;
+  --reel-bg: #1C1715;
   --white: #F5EDE6;
   --white-60: rgba(245, 237, 230, 0.60);
   --white-20: rgba(245, 237, 230, 0.20);
   --white-10: rgba(245, 237, 230, 0.10);
   --black-60: rgba(0, 0, 0, 0.60);
   --black-80: rgba(0, 0, 0, 0.80);
-  --accent: #6F4D38;
+  --accent: var(--accent);
   --radius-pill: 999px;
   --font-ui: 'Sora', sans-serif;
   --font-body: 'DM Sans', sans-serif;

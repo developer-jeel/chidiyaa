@@ -15,6 +15,17 @@ function getTheme() {
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem('chidiyaa-theme', theme);
+  
+  // Sync toggle elements
+  document.querySelectorAll('.theme-toggle-btn i').forEach(icon => {
+    icon.className = theme === 'dark' ? 'ph ph-sun' : 'ph ph-moon';
+  });
+  document.querySelectorAll('.dark-toggle-row i').forEach(icon => {
+    icon.className = theme === 'dark' ? 'ph ph-sun nav-icon' : 'ph ph-moon nav-icon';
+  });
+  document.querySelectorAll('.dark-toggle-row span:not(.toggle-pill)').forEach(span => {
+    span.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
+  });
 }
 function toggleTheme() {
   applyTheme(getTheme() === 'dark' ? 'light' : 'dark');
@@ -550,4 +561,198 @@ document.addEventListener('DOMContentLoaded', () => {
   initStoriesScroll();
   initMessagesMobile();
   initSkeletons();
+  
+  // Custom Animations
+  initParticles();
+  initCursorGlow();
+  initMagnetic();
+  initTilt();
+  initScrollReveal();
 });
+
+/* ─────────────────────────────────────────────
+   FLOATING PARTICLES CANVAS
+   ───────────────────────────────────────────── */
+function initParticles() {
+  const canvas = document.createElement('canvas');
+  canvas.id = 'particles-canvas';
+  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2;pointer-events:none;opacity:0.3;';
+  document.body.appendChild(canvas);
+  
+  const ctx = canvas.getContext('2d');
+  let width = (canvas.width = window.innerWidth);
+  let height = (canvas.height = window.innerHeight);
+  
+  window.addEventListener('resize', () => {
+    width = (canvas.width = window.innerWidth);
+    height = (canvas.height = window.innerHeight);
+  });
+  
+  const particles = [];
+  const count = Math.min(50, Math.floor((width * height) / 30000));
+  
+  class Particle {
+    constructor() {
+      this.x = Math.random() * width;
+      this.y = Math.random() * height;
+      this.vx = (Math.random() - 0.5) * 0.35;
+      this.vy = (Math.random() - 0.5) * 0.35;
+      this.r = Math.random() * 2 + 1;
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x < 0 || this.x > width) this.vx *= -1;
+      if (this.y < 0 || this.y > height) this.vy *= -1;
+    }
+    draw(color) {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.fill();
+    }
+  }
+  
+  for (let i = 0; i < count; i++) {
+    particles.push(new Particle());
+  }
+  
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+    
+    // Read computed style color
+    const color = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#A68A6B';
+    
+    particles.forEach(p => {
+      p.update();
+      p.draw(color);
+    });
+    
+    ctx.strokeStyle = color;
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 110) {
+          ctx.lineWidth = (1 - dist / 110) * 0.25;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+}
+
+/* ─────────────────────────────────────────────
+   CURSOR GLOW EFFECT
+   ───────────────────────────────────────────── */
+function initCursorGlow() {
+  if (!matchMedia('(hover: hover)').matches) return;
+  
+  document.addEventListener('mousemove', e => {
+    document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+    document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+  });
+  
+  if (!document.querySelector('.cursor-glow')) {
+    const glow = document.createElement('div');
+    glow.className = 'cursor-glow';
+    document.body.appendChild(glow);
+  }
+}
+
+/* ─────────────────────────────────────────────
+   MAGNETIC INTERACTIVE BUTTONS
+   ───────────────────────────────────────────── */
+function initMagnetic() {
+  if (!matchMedia('(hover: hover)').matches) return;
+  
+  document.querySelectorAll('.magnetic, .nav-link, .sidebar-brand-icon, .btn-auth, .register-btn, .follow-btn').forEach(el => {
+    el.addEventListener('mousemove', function(e) {
+      const rect = this.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      this.style.transform = `translate(${x * 0.16}px, ${y * 0.16}px) scale(1.02)`;
+      this.style.transition = 'none';
+    });
+    el.addEventListener('mouseleave', function() {
+      this.style.transform = '';
+      this.style.transition = 'transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+    });
+  });
+}
+
+/* ─────────────────────────────────────────────
+   3D CARD HOVER TILT
+   ───────────────────────────────────────────── */
+function initTilt() {
+  if (!matchMedia('(hover: hover)').matches) return;
+  
+  document.querySelectorAll('.post-card, .grid-post, .me-card, .suggest-item, .register-card, .auth-card').forEach(card => {
+    card.addEventListener('mousemove', function(e) {
+      const rect = this.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const xc = rect.width / 2;
+      const yc = rect.height / 2;
+      const rotateX = (yc - y) / 18;
+      const rotateY = (x - xc) / 18;
+      this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+      this.style.transition = 'none';
+    });
+    card.addEventListener('mouseleave', function() {
+      this.style.transform = '';
+      this.style.transition = 'transform 0.5s ease';
+    });
+  });
+}
+
+/* ─────────────────────────────────────────────
+   SCROLL REVEAL & STAGGER ANIMATIONS (GSAP / Observer)
+   ───────────────────────────────────────────── */
+function initScrollReveal() {
+  const elements = document.querySelectorAll('.post-card, .suggest-item, .story-item, .nav-link, .me-card, .register-card, .auth-card');
+  
+  if (window.gsap) {
+    gsap.from('.nav-link', {
+      opacity: 0,
+      x: -20,
+      duration: 0.6,
+      stagger: 0.05,
+      ease: 'power2.out',
+      delay: 0.1
+    });
+    gsap.from('.story-item', {
+      opacity: 0,
+      scale: 0.8,
+      y: 10,
+      duration: 0.5,
+      stagger: 0.04,
+      ease: 'back.out(1.7)',
+      delay: 0.2
+    });
+  } else {
+    // Fallback to IntersectionObserver
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05 });
+    
+    elements.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+      observer.observe(el);
+    });
+  }
+}

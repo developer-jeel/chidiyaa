@@ -14,33 +14,33 @@
 ───────────────────────────────────────────── */
 :root {
   /* ── Surfaces (White — center + right) ── */
-  --bg: #F5F5DC;
-  --surface: #FAFAFA;
-  --surface-2: #F5F0EB;
-  --surface-3: #EDE5DC;
-  --surface-4: #E7D7C9;
-  --border: rgba(163, 143, 133, 0.20);
-  --border-soft: rgba(163, 143, 133, 0.10);
-  --border-vivid: rgba(163, 143, 133, 0.35);
+  --bg: #F5EFE6;                 /* Soft beige */
+  --surface: #FFF9F0;           /* Cream white */
+  --surface-2: #E6D5C3;         /* Warm nude */
+  --surface-3: #E8D5B5;         /* Champagne gold */
+  --surface-4: #E3C9BC;         /* Rose nude */
+  --border: rgba(166, 138, 107, 0.20); /* Mocha brown transparent */
+  --border-soft: rgba(166, 138, 107, 0.10);
+  --border-vivid: rgba(166, 138, 107, 0.35);
 
   /* ── Text ── */
-  --text-1: #3B2F2A;
-  --text-2: #5C4E46;
-  --text-3: #8C7E76;
-  --text-4: #A69890;
-  --text-inv: #F5EDE6;
+  --text-1: #1E1E1E;            /* Matte black */
+  --text-2: #5A4A3F;            /* Deep warm grey */
+  --text-3: #A68A6B;            /* Mocha brown */
+  --text-4: #C4A484;            /* Light coffee */
+  --text-inv: #FFF9F0;          /* Inv: Cream white */
 
-  /* ── Brand: Latte (#A38F85) — sidebar + active states ── */
-  --accent: #6F4D38;
-  --accent-2: #8B7A70;
-  --accent-deep: #7A6A60;
-  --accent-light: rgba(163, 143, 133, 0.15);
-  --accent-hover: #917D73;
-  --accent-dim: rgba(163, 143, 133, 0.10);
-  --accent-glow: rgba(163, 143, 133, 0.25);
-  --accent-glow-lg: rgba(163, 143, 133, 0.40);
-  --accent-2-glow: rgba(139, 122, 112, 0.20);
-  --accent-2-dim: rgba(139, 122, 112, 0.10);
+  /* ── Brand Accents ── */
+  --accent: #A68A6B;            /* Mocha brown base */
+  --accent-2: #E8D5B5;          /* Champagne gold */
+  --accent-deep: #7A634E;       /* Deep warm brown */
+  --accent-light: rgba(166, 138, 107, 0.15);
+  --accent-hover: #8F7558;
+  --accent-dim: rgba(166, 138, 107, 0.10);
+  --accent-glow: rgba(166, 138, 107, 0.25);
+  --accent-glow-lg: rgba(166, 138, 107, 0.40);
+  --accent-2-glow: rgba(232, 213, 181, 0.20);
+  --accent-2-dim: rgba(232, 213, 181, 0.10);
 
   /* ── Semantic ── */
   --danger: #C27070;
@@ -48,24 +48,24 @@
   --warning: #C4A265;
 
   /* ── Glass ── */
-  --glass: rgba(255, 255, 255, 0.88);
-  --glass-2: rgba(250, 250, 250, 0.72);
-  --glass-border: rgba(163, 143, 133, 0.12);
-  --glass-dark: rgba(59, 47, 42, 0.90);
+  --glass: rgba(255, 249, 240, 0.72);
+  --glass-2: rgba(245, 239, 230, 0.65);
+  --glass-border: rgba(166, 138, 107, 0.12);
+  --glass-dark: rgba(30, 25, 22, 0.90);
 
   /* ── Story Ring ── */
-  --story-ring: conic-gradient(from 0deg, #6F4D38 0%, #8B7A70 30%, #d5c5b5 55%, #6F4D38 75%, #E7D7C9 100%);
+  --story-ring: linear-gradient(135deg, #FFF9F0 0%, #E8D5B5 25%, #A68A6B 60%, #E3C9BC 100%);
 
   /* ── Layered Shadows ── */
-  --shadow-xs: 0 1px 3px rgba(59, 47, 42, .05);
-  --shadow-sm: 0 2px 8px rgba(59, 47, 42, .08), 0 1px 2px rgba(59, 47, 42, .04);
-  --shadow-md: 0 8px 24px rgba(59, 47, 42, .10), 0 3px 8px rgba(59, 47, 42, .06);
-  --shadow-lg: 0 16px 48px rgba(59, 47, 42, .14), 0 6px 16px rgba(59, 47, 42, .07);
-  --shadow-xl: 0 28px 80px rgba(59, 47, 42, .18), 0 12px 32px rgba(59, 47, 42, .09);
-  --shadow-2xl: 0 48px 120px rgba(59, 47, 42, .22), 0 20px 56px rgba(59, 47, 42, .11);
-  --shadow-accent: 0 8px 32px rgba(163, 143, 133, .26), 0 2px 8px rgba(163, 143, 133, .13);
-  --shadow-gold: 0 8px 28px rgba(139, 122, 112, .20), 0 2px 8px rgba(139, 122, 112, .10);
-  --shadow-inset: inset 0 1px 2px rgba(59, 47, 42, .06);
+  --shadow-xs: 0 1px 3px rgba(30, 25, 22, .05);
+  --shadow-sm: 0 2px 8px rgba(30, 25, 22, .08), 0 1px 2px rgba(30, 25, 22, .04);
+  --shadow-md: 0 8px 24px rgba(30, 25, 22, .06), 0 3px 8px rgba(30, 25, 22, .04);
+  --shadow-lg: 0 16px 48px rgba(30, 25, 22, .08), 0 6px 16px rgba(30, 25, 22, .04);
+  --shadow-xl: 0 28px 80px rgba(30, 25, 22, .12), 0 12px 32px rgba(30, 25, 22, .06);
+  --shadow-2xl: 0 48px 120px rgba(30, 25, 22, .15), 0 20px 56px rgba(30, 25, 22, .08);
+  --shadow-accent: 0 8px 32px rgba(166, 138, 107, .18), 0 2px 8px rgba(166, 138, 107, .08);
+  --shadow-gold: 0 8px 28px rgba(232, 213, 181, .18), 0 2px 8px rgba(232, 213, 181, .08);
+  --shadow-inset: inset 0 1px 2px rgba(30, 25, 22, .04);
 
   /* ── Layout ── */
   --sidebar-w: 260px;
@@ -115,40 +115,47 @@
 
 /* ─── Dark Mode ─── */
 [data-theme="dark"] {
-  --bg: #2A2220;
-  --surface: #362E2B;
-  --surface-2: #413836;
-  --surface-3: #4D4340;
-  --surface-4: #5A504C;
-  --border: rgba(231, 215, 201, 0.10);
-  --border-soft: rgba(231, 215, 201, 0.06);
-  --border-vivid: rgba(231, 215, 201, 0.18);
+  --bg: #1C1715;                 /* Deep espresso */
+  --surface: #2A2421;           /* Warm charcoal */
+  --surface-2: #3D2E28;         /* Velvet brown */
+  --surface-3: #4A3430;         /* Dusty rose dark */
+  --surface-4: #54413B;
+  --border: rgba(196, 164, 132, 0.15); /* Muted gold transparent */
+  --border-soft: rgba(196, 164, 132, 0.08);
+  --border-vivid: rgba(196, 164, 132, 0.25);
 
-  --text-1: #F5EDE6;
-  --text-2: #D5C8BD;
-  --text-3: #A09389;
-  --text-4: #706560;
-  --text-inv: #2A2220;
+  --text-1: #F2EBE1;            /* Soft cream */
+  --text-2: #D5C8BD;            /* Warm muted grey */
+  --text-3: #C4A484;            /* Muted gold */
+  --text-4: #A68A6B;            /* Mocha brown */
+  --text-inv: #1C1715;          /* Inv: Deep espresso */
 
-  --accent: #C4B4A8;
-  --accent-2: #E7D7C9;
-  --accent-deep: #A38F85;
-  --accent-light: rgba(196, 180, 168, 0.16);
-  --accent-dim: rgba(196, 180, 168, 0.10);
-  --accent-glow: rgba(196, 180, 168, 0.30);
-  --accent-glow-lg: rgba(196, 180, 168, 0.42);
+  --accent: #C4A484;            /* Muted gold base */
+  --accent-2: #A68A6B;          /* Mocha brown accent */
+  --accent-deep: #E8D5B5;       /* Champagne gold */
+  --accent-light: rgba(196, 164, 132, 0.16);
+  --accent-dim: rgba(196, 164, 132, 0.10);
+  --accent-glow: rgba(196, 164, 132, 0.30);
+  --accent-glow-lg: rgba(196, 164, 132, 0.45);
+  --accent-2-glow: rgba(166, 138, 107, 0.20);
+  --accent-2-dim: rgba(166, 138, 107, 0.10);
 
-  --glass: rgba(42, 34, 32, 0.85);
-  --glass-2: rgba(54, 46, 43, 0.70);
-  --glass-border: rgba(231, 215, 201, 0.10);
+  --glass: rgba(30, 25, 22, 0.70); /* Glassmorphism overlay dark */
+  --glass-2: rgba(42, 36, 33, 0.65);
+  --glass-border: rgba(196, 164, 132, 0.15);
   --glass-dark: rgba(28, 22, 20, 0.92);
+
+  --story-ring: linear-gradient(135deg, #1C1715 0%, #3D2E28 25%, #C4A484 60%, #F2EBE1 100%);
 
   --shadow-xs: 0 1px 3px rgba(0, 0, 0, .35);
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, .40);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, .50);
-  --shadow-lg: 0 16px 48px rgba(0, 0, 0, .60);
-  --shadow-xl: 0 28px 80px rgba(0, 0, 0, .70);
-  --shadow-accent: 0 8px 32px rgba(196, 180, 168, .22);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, .45);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, .50);
+  --shadow-xl: 0 28px 80px rgba(0, 0, 0, .60);
+  --shadow-2xl: 0 48px 120px rgba(0, 0, 0, .70);
+  --shadow-accent: 0 8px 32px rgba(196, 164, 132, .22);
+  --shadow-gold: 0 8px 28px rgba(196, 164, 132, .20);
+  --shadow-inset: inset 0 1px 2px rgba(0, 0, 0, .35);
 }
 
 /* ─────────────────────────────────────────────
@@ -4682,4 +4689,99 @@ ul {
 
 [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
   background: var(--accent);
+}
+
+/* ── Floating Labels ── */
+.floating-label-group {
+  position: relative;
+  margin-bottom: 18px;
+}
+
+.floating-label-group .field-input {
+  width: 100%;
+  height: 54px;
+  padding: 22px 14px 6px;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--border);
+  background: var(--surface-glass);
+  backdrop-filter: var(--blur-sm);
+  outline: none;
+  font-size: 14px;
+  color: var(--text-1);
+  transition: all var(--t-fast) var(--ease);
+}
+
+.floating-label-group .field-input:focus {
+  border-color: var(--accent);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.floating-label-group .field-label {
+  position: absolute;
+  left: 14px;
+  top: 17px;
+  pointer-events: none;
+  transition: all var(--t-fast) var(--ease);
+  color: var(--text-3);
+  font-size: 14px;
+  font-weight: 500;
+  transform-origin: left top;
+}
+
+.floating-label-group .field-input:focus ~ .field-label,
+.floating-label-group .field-input:not(:placeholder-shown) ~ .field-label {
+  transform: translateY(-9px) scale(0.72);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ── Custom Animated Checkbox ── */
+.custom-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 13.5px;
+  color: var(--text-2);
+}
+
+.custom-checkbox input {
+  display: none;
+}
+
+.checkbox-box {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--border-vivid);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--t-fast) var(--ease);
+  background: var(--surface-glass);
+}
+
+.custom-checkbox input:checked + .checkbox-box {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.checkbox-box::after {
+  content: '✓';
+  color: var(--text-inv);
+  font-size: 11px;
+  font-weight: bold;
+  display: none;
+}
+
+.custom-checkbox input:checked + .checkbox-box::after {
+  display: block;
+}
+
+/* ── Shifting Mesh Animation for Auth ── */
+.auth-left::before {
+  animation: meshDrift 40s ease infinite alternate;
 }
