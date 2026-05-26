@@ -3000,28 +3000,31 @@ ul {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-flow: dense;
-  gap: 6px;
+  gap: 3px;
 }
 
 .search-grid-item {
-  overflow: hidden;
-  cursor: pointer;
   position: relative;
-  aspect-ratio: 1/1;
-  border-radius: 8px;
-  border: 1px solid var(--border-soft);
+  overflow: hidden;
+  border-radius: 0px;
+  cursor: pointer;
   background: var(--surface);
-  transition: transform var(--t-slow) var(--ease), box-shadow var(--t-slow) var(--ease);
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  transition: transform var(--t-slow) var(--ease);
 }
 
 .search-grid-item.tall {
   grid-row: span 2;
-  aspect-ratio: unset;
-  height: 100%;
+  padding-bottom: calc(200% + 3px);
 }
 
 .search-grid-item img,
 .search-grid-item video {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -3031,7 +3034,7 @@ ul {
 
 .search-grid-item:hover img,
 .search-grid-item:hover video {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 /* Badge in the corner (top-right) */
@@ -3039,24 +3042,16 @@ ul {
   position: absolute;
   top: 10px;
   right: 10px;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
   color: #fff;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
+  font-size: 16px;
   z-index: 2;
-  transition: opacity var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.45));
+  pointer-events: none;
+  transition: opacity var(--t-fast) var(--ease);
 }
 
 .search-grid-item:hover .grid-item-badge {
   opacity: 0;
-  transform: scale(0.8);
 }
 
 .grid-post-overlay {
@@ -3065,8 +3060,7 @@ ul {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(26, 20, 18, 0.6); /* Warm espresso overlay tone */
-  backdrop-filter: blur(3px);
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3075,7 +3069,7 @@ ul {
   transition: opacity var(--t-base) var(--ease);
   color: #fff;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 15px;
   z-index: 3;
 }
 

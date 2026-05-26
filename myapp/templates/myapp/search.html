@@ -66,10 +66,9 @@
          <!-- Photo Post (1x1 square) -->
          <div class="search-grid-item photo-item" data-open-modal="post-view-modal-post-{{post.id}}">
            <img src="{{post.image.url}}" alt="Post" loading="lazy"/>
-           <div class="grid-item-badge"><i class="ph ph-image"></i></div>
            <div class="grid-post-overlay">
-             <span>❤️ {% if post.like_post.count %}{{ post.like_post.count }}{% else %}2.1K{% endif %}</span>
-             <span>💬 {% if post.commented_post.count %}{{ post.commented_post.count }}{% else %}42{% endif %}</span>
+             <span>❤️ {{ post.like_post.count }}</span>
+             <span>💬 {{ post.commented_post.count }}</span>
            </div>
          </div>
          {% else %}
@@ -78,8 +77,8 @@
            <video src="{{post.video.url}}" loop muted playsinline loading="lazy"></video>
            <div class="grid-item-badge"><i class="ph ph-video-camera"></i></div>
            <div class="grid-post-overlay">
-             <span>❤️ {% if post.like_reel.count %}{{ post.like_reel.count }}{% else %}8.4K{% endif %}</span>
-             <span>💬 {% if post.commented_reel.count %}{{ post.commented_reel.count }}{% else %}156{% endif %}</span>
+             <span>❤️ {{ post.like_reel.count }}</span>
+             <span>💬 {{ post.commented_reel.count }}</span>
            </div>
          </div>
          {% endif %}
