@@ -283,7 +283,7 @@ def search(request):
     all_reels = instrareels.objects.exclude(user = uid)
     reel_post = list(all_posts) + list(all_reels)
     random.shuffle(reel_post)
-    all_comments = comments.objects.exclude(user_fk = uid)
+    all_comments = comments.objects.all()
     context = {'uid':uid, 'all_posts' : reel_post,'all_comments' : all_comments}
     return render(request, "myapp/search.html",context)
 
